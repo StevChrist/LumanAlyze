@@ -1,0 +1,1374 @@
+2025-06-18 19:14:40,496 - main - ERROR - Full traceback:
+  + Exception Group Traceback (most recent call last):
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 76, in collapse_excgroups
+  |     yield
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 177, in __call__
+  |     async with anyio.create_task_group() as task_group:
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    |     with recv_stream, send_stream, collapse_excgroups():
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 42, in log_requests
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    |     raise app_exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    |     await self.simple_response(scope, receive, send, request_headers=headers)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    |     await self.app(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    |     await route.handle(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    |     await self.app(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 338, in app
+    |     response = actual_response_class(content, **response_args)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 182, in __init__
+    |     super().__init__(content, status_code, headers, media_type, background)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 45, in __init__
+    |     self.body = self.render(content)
+    |                 ^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 185, in render
+    |     return json.dumps(
+    |            ^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 238, in dumps
+    |     **kw).encode(obj)
+    |           ^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 200, in encode
+    |     chunks = self.iterencode(o, _one_shot=True)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 258, in iterencode
+    |     return _iterencode(o, 0)
+    |            ^^^^^^^^^^^^^^^^^
+    | ValueError: Out of range float values are not JSON compliant
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 42, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    raise app_exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 182, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 45, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 185, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+ValueError: Out of range float values are not JSON compliant
+2025-06-18 19:17:51,066 - main - ERROR - Full traceback:
+  + Exception Group Traceback (most recent call last):
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 76, in collapse_excgroups
+  |     yield
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 177, in __call__
+  |     async with anyio.create_task_group() as task_group:
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    |     with recv_stream, send_stream, collapse_excgroups():
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 53, in log_requests
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    |     raise app_exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    |     await self.simple_response(scope, receive, send, request_headers=headers)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    |     await self.app(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    |     await route.handle(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    |     await self.app(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 338, in app
+    |     response = actual_response_class(content, **response_args)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 182, in __init__
+    |     super().__init__(content, status_code, headers, media_type, background)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 45, in __init__
+    |     self.body = self.render(content)
+    |                 ^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 185, in render
+    |     return json.dumps(
+    |            ^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 238, in dumps
+    |     **kw).encode(obj)
+    |           ^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 200, in encode
+    |     chunks = self.iterencode(o, _one_shot=True)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 258, in iterencode
+    |     return _iterencode(o, 0)
+    |            ^^^^^^^^^^^^^^^^^
+    | ValueError: Out of range float values are not JSON compliant
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 53, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    raise app_exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 182, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 45, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 185, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+ValueError: Out of range float values are not JSON compliant
+2025-06-18 19:18:42,138 - main - ERROR - Full traceback:
+  + Exception Group Traceback (most recent call last):
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 76, in collapse_excgroups
+  |     yield
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 177, in __call__
+  |     async with anyio.create_task_group() as task_group:
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    |     with recv_stream, send_stream, collapse_excgroups():
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 53, in log_requests
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    |     raise app_exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    |     await self.simple_response(scope, receive, send, request_headers=headers)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    |     await self.app(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    |     await route.handle(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    |     await self.app(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 338, in app
+    |     response = actual_response_class(content, **response_args)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 182, in __init__
+    |     super().__init__(content, status_code, headers, media_type, background)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 45, in __init__
+    |     self.body = self.render(content)
+    |                 ^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 185, in render
+    |     return json.dumps(
+    |            ^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 238, in dumps
+    |     **kw).encode(obj)
+    |           ^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 200, in encode
+    |     chunks = self.iterencode(o, _one_shot=True)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 258, in iterencode
+    |     return _iterencode(o, 0)
+    |            ^^^^^^^^^^^^^^^^^
+    | ValueError: Out of range float values are not JSON compliant
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 53, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    raise app_exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 182, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 45, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 185, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+ValueError: Out of range float values are not JSON compliant
+2025-06-18 19:20:51,954 - main - ERROR - Full traceback:
+  + Exception Group Traceback (most recent call last):
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 76, in collapse_excgroups
+  |     yield
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 177, in __call__
+  |     async with anyio.create_task_group() as task_group:
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    |     with recv_stream, send_stream, collapse_excgroups():
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 53, in log_requests
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    |     raise app_exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    |     await self.simple_response(scope, receive, send, request_headers=headers)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    |     await self.app(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    |     await route.handle(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    |     await self.app(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 338, in app
+    |     response = actual_response_class(content, **response_args)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 182, in __init__
+    |     super().__init__(content, status_code, headers, media_type, background)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 45, in __init__
+    |     self.body = self.render(content)
+    |                 ^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 185, in render
+    |     return json.dumps(
+    |            ^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 238, in dumps
+    |     **kw).encode(obj)
+    |           ^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 200, in encode
+    |     chunks = self.iterencode(o, _one_shot=True)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 258, in iterencode
+    |     return _iterencode(o, 0)
+    |            ^^^^^^^^^^^^^^^^^
+    | ValueError: Out of range float values are not JSON compliant
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 53, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    raise app_exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 182, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 45, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 185, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+ValueError: Out of range float values are not JSON compliant
+2025-06-18 19:25:30,939 - main - ERROR - Full traceback:
+  + Exception Group Traceback (most recent call last):
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 76, in collapse_excgroups
+  |     yield
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 177, in __call__
+  |     async with anyio.create_task_group() as task_group:
+  |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 772, in __aexit__
+  |     raise BaseExceptionGroup(
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    |     with recv_stream, send_stream, collapse_excgroups():
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    |     self.gen.throw(typ, value, traceback)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 53, in log_requests
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    |     raise app_exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    |     await self.simple_response(scope, receive, send, request_headers=headers)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    |     await self.app(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    |     await route.handle(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    |     await self.app(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    |     await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    |     response = await f(request)
+    |                ^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 338, in app
+    |     response = actual_response_class(content, **response_args)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 182, in __init__
+    |     super().__init__(content, status_code, headers, media_type, background)
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 45, in __init__
+    |     self.body = self.render(content)
+    |                 ^^^^^^^^^^^^^^^^^^^^
+    |   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 185, in render
+    |     return json.dumps(
+    |            ^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 238, in dumps
+    |     **kw).encode(obj)
+    |           ^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 200, in encode
+    |     chunks = self.iterencode(o, _one_shot=True)
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 258, in iterencode
+    |     return _iterencode(o, 0)
+    |            ^^^^^^^^^^^^^^^^^
+    | ValueError: Out of range float values are not JSON compliant
+    +------------------------------------
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 53, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    raise app_exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 338, in app
+    response = actual_response_class(content, **response_args)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 182, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 45, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\responses.py", line 185, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+ValueError: Out of range float values are not JSON compliant
+2025-06-18 19:33:32,495 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-18 19:33:32,496 - main - INFO - Headers: {'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '525379', 'sec-ch-ua-platform': '"Windows"', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'sec-ch-ua': '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"', 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryRLOItYaB31nF2bvg', 'sec-ch-ua-mobile': '?0', 'accept': '*/*', 'origin': 'http://localhost:3000', 'sec-fetch-site': 'same-site', 'sec-fetch-mode': 'cors', 'sec-fetch-dest': 'empty', 'referer': 'http://localhost:3000/', 'accept-encoding': 'gzip, deflate, br, zstd', 'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'}
+2025-06-18 19:33:32,496 - main - INFO - Origin: http://localhost:3000
+2025-06-18 19:33:32,499 - main - INFO - FILE UPLOAD STARTED
+2025-06-18 19:33:32,499 - main - INFO - File details: water_potability.csv | Content-Type: text/csv
+2025-06-18 19:33:32,499 - main - INFO - Reading file contents...
+2025-06-18 19:33:32,499 - main - INFO - File read successfully, size: 525187 bytes
+2025-06-18 19:33:32,500 - main - INFO - Parsing CSV data...
+2025-06-18 19:33:32,510 - main - INFO - CSV parsed successfully: 3276 rows, 10 columns
+2025-06-18 19:33:32,510 - main - INFO - Cleaning infinite and NaN values...
+2025-06-18 19:33:32,511 - main - INFO - Numeric columns found: 10 - ['ph', 'Hardness', 'Solids', 'Chloramines', 'Sulfate', 'Conductivity', 'Organic_carbon', 'Trihalomethanes', 'Turbidity', 'Potability']
+2025-06-18 19:33:32,511 - main - INFO - Data stored in memory for file: water_potability.csv
+2025-06-18 19:33:32,511 - main - INFO - Extracting metadata...
+2025-06-18 19:33:32,513 - main - INFO - UPLOAD SUCCESSFUL: water_potability.csv
+2025-06-18 19:33:32,513 - main - INFO - Metadata: Rows=3276, Cols=10, Numeric=10
+2025-06-18 19:33:32,514 - main - INFO - RESPONSE: Status 200 | Time: 0.019s
+2025-06-18 19:34:16,679 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-18 19:34:16,680 - main - INFO - Headers: {'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '5642154', 'sec-ch-ua-platform': '"Windows"', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'sec-ch-ua': '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"', 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundary9nScCSG3CUwvsquU', 'sec-ch-ua-mobile': '?0', 'accept': '*/*', 'origin': 'http://localhost:3000', 'sec-fetch-site': 'same-site', 'sec-fetch-mode': 'cors', 'sec-fetch-dest': 'empty', 'referer': 'http://localhost:3000/', 'accept-encoding': 'gzip, deflate, br, zstd', 'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'}
+2025-06-18 19:34:16,680 - main - INFO - Origin: http://localhost:3000
+2025-06-18 19:34:16,703 - main - INFO - FILE UPLOAD STARTED
+2025-06-18 19:34:16,703 - main - INFO - File details: water_potability_2.csv | Content-Type: text/csv
+2025-06-18 19:34:16,704 - main - INFO - Reading file contents...
+2025-06-18 19:34:16,706 - main - INFO - File read successfully, size: 5641960 bytes
+2025-06-18 19:34:16,708 - main - INFO - Parsing CSV data...
+2025-06-18 19:34:16,794 - main - INFO - CSV parsed successfully: 100000 rows, 10 columns
+2025-06-18 19:34:16,795 - main - INFO - Cleaning infinite and NaN values...
+2025-06-18 19:34:16,809 - main - INFO - Numeric columns found: 10 - ['ph', 'hardness', 'tds', 'chlorine', 'sulfate', 'conductivity', 'organic_carbon', 'trihalomethanes', 'turbidity', 'potability']
+2025-06-18 19:34:16,809 - main - INFO - Data stored in memory for file: water_potability_2.csv
+2025-06-18 19:34:16,809 - main - INFO - Extracting metadata...
+2025-06-18 19:34:16,814 - main - INFO - UPLOAD SUCCESSFUL: water_potability_2.csv
+2025-06-18 19:34:16,814 - main - INFO - Metadata: Rows=100000, Cols=10, Numeric=10
+2025-06-18 19:34:16,817 - main - INFO - RESPONSE: Status 200 | Time: 0.137s
+2025-06-18 19:41:08,284 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-18 19:41:08,284 - main - INFO - Headers: {'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '525379', 'sec-ch-ua-platform': '"Windows"', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'sec-ch-ua': '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"', 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryjk8iooeHdaGly6cN', 'sec-ch-ua-mobile': '?0', 'accept': '*/*', 'origin': 'http://localhost:3000', 'sec-fetch-site': 'same-site', 'sec-fetch-mode': 'cors', 'sec-fetch-dest': 'empty', 'referer': 'http://localhost:3000/', 'accept-encoding': 'gzip, deflate, br, zstd', 'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'}
+2025-06-18 19:41:08,284 - main - INFO - Origin: http://localhost:3000
+2025-06-18 19:41:08,287 - main - INFO - FILE UPLOAD STARTED
+2025-06-18 19:41:08,287 - main - INFO - File details: water_potability.csv | Content-Type: text/csv
+2025-06-18 19:41:08,287 - main - INFO - Reading file contents...
+2025-06-18 19:41:08,288 - main - INFO - File read successfully, size: 525187 bytes
+2025-06-18 19:41:08,288 - main - INFO - Parsing CSV data...
+2025-06-18 19:41:08,300 - main - INFO - CSV parsed successfully: 3276 rows, 10 columns
+2025-06-18 19:41:08,300 - main - INFO - Cleaning infinite and NaN values...
+2025-06-18 19:41:08,301 - main - INFO - Numeric columns found: 10 - ['ph', 'Hardness', 'Solids', 'Chloramines', 'Sulfate', 'Conductivity', 'Organic_carbon', 'Trihalomethanes', 'Turbidity', 'Potability']
+2025-06-18 19:41:08,301 - main - INFO - Data stored in memory for file: water_potability.csv
+2025-06-18 19:41:08,302 - main - INFO - Extracting metadata...
+2025-06-18 19:41:08,305 - main - INFO - UPLOAD SUCCESSFUL: water_potability.csv
+2025-06-18 19:41:08,305 - main - INFO - Metadata: Rows=3276, Cols=10, Numeric=10
+2025-06-18 19:41:08,306 - main - INFO - RESPONSE: Status 200 | Time: 0.022s
+2025-06-18 19:41:17,145 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-18 19:41:17,145 - main - INFO - Headers: {'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '48004876', 'sec-ch-ua-platform': '"Windows"', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'sec-ch-ua': '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"', 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryfM2jfMMmpKWjxsBs', 'sec-ch-ua-mobile': '?0', 'accept': '*/*', 'origin': 'http://localhost:3000', 'sec-fetch-site': 'same-site', 'sec-fetch-mode': 'cors', 'sec-fetch-dest': 'empty', 'referer': 'http://localhost:3000/', 'accept-encoding': 'gzip, deflate, br, zstd', 'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'}
+2025-06-18 19:41:17,145 - main - INFO - Origin: http://localhost:3000
+2025-06-18 19:41:17,384 - main - INFO - FILE UPLOAD STARTED
+2025-06-18 19:41:17,384 - main - INFO - File details: Customer Dataset 1.csv | Content-Type: text/csv
+2025-06-18 19:41:17,384 - main - INFO - Reading file contents...
+2025-06-18 19:41:17,409 - main - INFO - File read successfully, size: 48004682 bytes
+2025-06-18 19:41:17,409 - main - INFO - Parsing CSV data...
+2025-06-18 19:41:17,426 - main - ERROR - Encoding error: 'utf-8' codec can't decode byte 0xa3 in position 3394770: invalid start byte
+2025-06-18 19:41:17,429 - main - INFO - RESPONSE: Status 400 | Time: 0.283s
+2025-06-18 19:41:23,147 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-18 19:41:23,148 - main - INFO - Headers: {'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '977695', 'sec-ch-ua-platform': '"Windows"', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'sec-ch-ua': '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"', 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundarywaYRpdfxRQJKt0em', 'sec-ch-ua-mobile': '?0', 'accept': '*/*', 'origin': 'http://localhost:3000', 'sec-fetch-site': 'same-site', 'sec-fetch-mode': 'cors', 'sec-fetch-dest': 'empty', 'referer': 'http://localhost:3000/', 'accept-encoding': 'gzip, deflate, br, zstd', 'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'}
+2025-06-18 19:41:23,149 - main - INFO - Origin: http://localhost:3000
+2025-06-18 19:41:23,156 - main - INFO - FILE UPLOAD STARTED
+2025-06-18 19:41:23,156 - main - INFO - File details: Customer Dataset 2.csv | Content-Type: text/csv
+2025-06-18 19:41:23,156 - main - INFO - Reading file contents...
+2025-06-18 19:41:23,157 - main - INFO - File read successfully, size: 977501 bytes
+2025-06-18 19:41:23,157 - main - INFO - Parsing CSV data...
+2025-06-18 19:41:23,177 - main - INFO - CSV parsed successfully: 7043 rows, 21 columns
+2025-06-18 19:41:23,178 - main - INFO - Cleaning infinite and NaN values...
+2025-06-18 19:41:23,191 - main - INFO - Numeric columns found: 3 - ['SeniorCitizen', 'tenure', 'MonthlyCharges']
+2025-06-18 19:41:23,191 - main - INFO - Data stored in memory for file: Customer Dataset 2.csv
+2025-06-18 19:41:23,191 - main - INFO - Extracting metadata...
+2025-06-18 19:41:23,198 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-18 19:41:23,198 - main - INFO - Metadata: Rows=7043, Cols=21, Numeric=3
+2025-06-18 19:41:23,199 - main - INFO - RESPONSE: Status 200 | Time: 0.052s
+2025-06-18 19:41:28,464 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-18 19:41:28,465 - main - INFO - Headers: {'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '66396', 'sec-ch-ua-platform': '"Windows"', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'sec-ch-ua': '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"', 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryxcd5ggAYNo9y1PT7', 'sec-ch-ua-mobile': '?0', 'accept': '*/*', 'origin': 'http://localhost:3000', 'sec-fetch-site': 'same-site', 'sec-fetch-mode': 'cors', 'sec-fetch-dest': 'empty', 'referer': 'http://localhost:3000/', 'accept-encoding': 'gzip, deflate, br, zstd', 'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'}
+2025-06-18 19:41:28,465 - main - INFO - Origin: http://localhost:3000
+2025-06-18 19:41:28,467 - main - INFO - FILE UPLOAD STARTED
+2025-06-18 19:41:28,467 - main - INFO - File details: Dataset 3.csv | Content-Type: text/csv
+2025-06-18 19:41:28,467 - main - INFO - Reading file contents...
+2025-06-18 19:41:28,467 - main - INFO - File read successfully, size: 66211 bytes
+2025-06-18 19:41:28,468 - main - INFO - Parsing CSV data...
+2025-06-18 19:41:28,471 - main - INFO - CSV parsed successfully: 1000 rows, 10 columns
+2025-06-18 19:41:28,471 - main - INFO - Cleaning infinite and NaN values...
+2025-06-18 19:41:28,472 - main - INFO - Numeric columns found: 6 - ['Number_of_Riders', 'Number_of_Drivers', 'Number_of_Past_Rides', 'Average_Ratings', 'Expected_Ride_Duration', 'Historical_Cost_of_Ride']
+2025-06-18 19:41:28,472 - main - INFO - Data stored in memory for file: Dataset 3.csv
+2025-06-18 19:41:28,472 - main - INFO - Extracting metadata...
+2025-06-18 19:41:28,476 - main - INFO - UPLOAD SUCCESSFUL: Dataset 3.csv
+2025-06-18 19:41:28,476 - main - INFO - Metadata: Rows=1000, Cols=10, Numeric=6
+2025-06-18 19:41:28,476 - main - INFO - RESPONSE: Status 200 | Time: 0.011s
+2025-06-18 19:41:32,798 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-18 19:41:32,799 - main - INFO - Headers: {'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '1272790', 'sec-ch-ua-platform': '"Windows"', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'sec-ch-ua': '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"', 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundarySMEufMpYop2u0zCI', 'sec-ch-ua-mobile': '?0', 'accept': '*/*', 'origin': 'http://localhost:3000', 'sec-fetch-site': 'same-site', 'sec-fetch-mode': 'cors', 'sec-fetch-dest': 'empty', 'referer': 'http://localhost:3000/', 'accept-encoding': 'gzip, deflate, br, zstd', 'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'}
+2025-06-18 19:41:32,799 - main - INFO - Origin: http://localhost:3000
+2025-06-18 19:41:32,810 - main - INFO - FILE UPLOAD STARTED
+2025-06-18 19:41:32,810 - main - INFO - File details: Dataset Produk dan marketing.csv | Content-Type: text/csv
+2025-06-18 19:41:32,810 - main - INFO - Reading file contents...
+2025-06-18 19:41:32,811 - main - INFO - File read successfully, size: 1272586 bytes
+2025-06-18 19:41:32,811 - main - INFO - Parsing CSV data...
+2025-06-18 19:41:32,840 - main - INFO - CSV parsed successfully: 10000 rows, 17 columns
+2025-06-18 19:41:32,841 - main - INFO - Cleaning infinite and NaN values...
+2025-06-18 19:41:32,853 - main - INFO - Numeric columns found: 10 - ['Budget', 'Clicks', 'Conversions', 'Revenue', 'ROI', 'Subscription_Length', 'Discount', 'Units_Sold', 'Bundle_Price', 'Customer_Refund']
+2025-06-18 19:41:32,854 - main - INFO - Data stored in memory for file: Dataset Produk dan marketing.csv
+2025-06-18 19:41:32,854 - main - INFO - Extracting metadata...
+2025-06-18 19:41:32,860 - main - INFO - UPLOAD SUCCESSFUL: Dataset Produk dan marketing.csv
+2025-06-18 19:41:32,860 - main - INFO - Metadata: Rows=10000, Cols=17, Numeric=10
+2025-06-18 19:41:32,863 - main - INFO - RESPONSE: Status 200 | Time: 0.065s
+2025-06-18 19:41:35,919 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-18 19:41:35,919 - main - INFO - Headers: {'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '48004876', 'sec-ch-ua-platform': '"Windows"', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'sec-ch-ua': '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"', 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundaryAe5c5OPWSiXjQOaP', 'sec-ch-ua-mobile': '?0', 'accept': '*/*', 'origin': 'http://localhost:3000', 'sec-fetch-site': 'same-site', 'sec-fetch-mode': 'cors', 'sec-fetch-dest': 'empty', 'referer': 'http://localhost:3000/', 'accept-encoding': 'gzip, deflate, br, zstd', 'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'}
+2025-06-18 19:41:35,920 - main - INFO - Origin: http://localhost:3000
+2025-06-18 19:41:36,101 - main - INFO - FILE UPLOAD STARTED
+2025-06-18 19:41:36,101 - main - INFO - File details: Customer Dataset 1.csv | Content-Type: text/csv
+2025-06-18 19:41:36,101 - main - INFO - Reading file contents...
+2025-06-18 19:41:36,121 - main - INFO - File read successfully, size: 48004682 bytes
+2025-06-18 19:41:36,121 - main - INFO - Parsing CSV data...
+2025-06-18 19:41:36,141 - main - ERROR - Encoding error: 'utf-8' codec can't decode byte 0xa3 in position 3394770: invalid start byte
+2025-06-18 19:41:36,142 - main - INFO - RESPONSE: Status 400 | Time: 0.223s
+2025-06-18 20:02:54,836 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-18 20:02:54,837 - main - INFO - Headers: {'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '66396', 'sec-ch-ua-platform': '"Windows"', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36', 'sec-ch-ua': '"Google Chrome";v="137", "Chromium";v="137", "Not/A)Brand";v="24"', 'content-type': 'multipart/form-data; boundary=----WebKitFormBoundarytVFmAMAMfNFXTefg', 'sec-ch-ua-mobile': '?0', 'accept': '*/*', 'origin': 'http://localhost:3000', 'sec-fetch-site': 'same-site', 'sec-fetch-mode': 'cors', 'sec-fetch-dest': 'empty', 'referer': 'http://localhost:3000/', 'accept-encoding': 'gzip, deflate, br, zstd', 'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7'}
+2025-06-18 20:02:54,837 - main - INFO - Origin: http://localhost:3000
+2025-06-18 20:02:54,840 - main - INFO - FILE UPLOAD STARTED
+2025-06-18 20:02:54,840 - main - INFO - File details: Dataset 3.csv | Content-Type: text/csv
+2025-06-18 20:02:54,840 - main - INFO - Reading file contents...
+2025-06-18 20:02:54,841 - main - INFO - File read successfully, size: 66211 bytes
+2025-06-18 20:02:54,841 - main - INFO - Parsing CSV data...
+2025-06-18 20:02:54,852 - main - INFO - CSV parsed successfully: 1000 rows, 10 columns
+2025-06-18 20:02:54,854 - main - INFO - Cleaning infinite and NaN values...
+2025-06-18 20:02:54,858 - main - INFO - Numeric columns found: 6 - ['Number_of_Riders', 'Number_of_Drivers', 'Number_of_Past_Rides', 'Average_Ratings', 'Expected_Ride_Duration', 'Historical_Cost_of_Ride']
+2025-06-18 20:02:54,858 - main - INFO - Data stored in memory for file: Dataset 3.csv
+2025-06-18 20:02:54,858 - main - INFO - Extracting metadata...
+2025-06-18 20:02:54,865 - main - INFO - UPLOAD SUCCESSFUL: Dataset 3.csv
+2025-06-18 20:02:54,865 - main - INFO - Metadata: Rows=1000, Cols=10, Numeric=6
+2025-06-18 20:02:54,865 - main - INFO - RESPONSE: Status 200 | Time: 0.029s
+2025-06-18 20:36:27,588 - main - INFO - INCOMING REQUEST: GET http://localhost:8000/
+2025-06-18 20:36:27,590 - main - INFO - RESPONSE: Status 200 | Time: 0.002s
+2025-06-18 20:36:27,674 - main - INFO - INCOMING REQUEST: GET http://localhost:8000/favicon.ico
+2025-06-18 20:36:27,675 - main - INFO - RESPONSE: Status 404 | Time: 0.001s
+2025-06-18 20:36:37,588 - main - INFO - INCOMING REQUEST: GET http://localhost:8000/health
+2025-06-18 20:36:37,589 - main - INFO - RESPONSE: Status 200 | Time: 0.001s
+2025-06-18 20:36:48,796 - main - INFO - INCOMING REQUEST: GET http://localhost:8000/docs
+2025-06-18 20:36:48,796 - main - INFO - RESPONSE: Status 200 | Time: 0.000s
+2025-06-18 20:36:49,232 - main - INFO - INCOMING REQUEST: GET http://localhost:8000/openapi.json
+2025-06-18 20:36:49,250 - main - INFO - RESPONSE: Status 200 | Time: 0.018s
+2025-06-18 20:37:56,636 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-18 20:37:56,638 - utils.data_handler - INFO - Processing file: Dataset 3.csv
+2025-06-18 20:37:56,643 - main - INFO - UPLOAD SUCCESSFUL: Dataset 3.csv
+2025-06-18 20:37:56,643 - main - INFO - RESPONSE: Status 200 | Time: 0.007s
+2025-06-18 20:40:48,156 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=standard&remove_outliers_flag=true&outlier_method=iqr
+2025-06-18 20:40:48,156 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-18 20:40:48,156 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-18 20:40:48,158 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-18 20:40:48,167 - models.preprocessing - INFO - Normalizing data with method: standard
+2025-06-18 20:40:48,177 - models.preprocessing - INFO - Preprocessing completed. Shape: (990, 10)
+2025-06-18 20:40:48,179 - main - ERROR - REQUEST FAILED: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:40:48,179 - main - ERROR - GLOBAL ERROR: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:40:48,179 - main - ERROR - Full traceback:
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 324, in jsonable_encoder
+    data = dict(obj)
+           ^^^^^^^^^
+TypeError: 'numpy.int64' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 329, in jsonable_encoder
+    data = vars(obj)
+           ^^^^^^^^^
+TypeError: vars() argument must have __dict__ attribute
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 57, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    raise app_exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 201, in serialize_response
+    return jsonable_encoder(response_content)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 289, in jsonable_encoder
+    encoded_value = jsonable_encoder(
+                    ^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 289, in jsonable_encoder
+    encoded_value = jsonable_encoder(
+                    ^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 332, in jsonable_encoder
+    raise ValueError(errors) from e
+ValueError: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:48:53,470 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-18 20:48:53,471 - utils.data_handler - INFO - Processing file: Dataset 3.csv
+2025-06-18 20:48:53,475 - main - INFO - UPLOAD SUCCESSFUL: Dataset 3.csv
+2025-06-18 20:48:53,477 - main - INFO - RESPONSE: Status 200 | Time: 0.006s
+2025-06-18 20:49:27,082 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mode&normalize_method=standard&remove_outliers_flag=true&outlier_method=iqr
+2025-06-18 20:49:27,083 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-18 20:49:27,083 - models.preprocessing - INFO - Handling missing values with strategy: mode
+2025-06-18 20:49:27,084 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-18 20:49:27,090 - models.preprocessing - INFO - Normalizing data with method: standard
+2025-06-18 20:49:27,095 - models.preprocessing - INFO - Preprocessing completed. Shape: (990, 10)
+2025-06-18 20:49:27,096 - main - ERROR - REQUEST FAILED: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:49:27,096 - main - ERROR - GLOBAL ERROR: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:49:27,097 - main - ERROR - Full traceback:
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 324, in jsonable_encoder
+    data = dict(obj)
+           ^^^^^^^^^
+TypeError: 'numpy.int64' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 329, in jsonable_encoder
+    data = vars(obj)
+           ^^^^^^^^^
+TypeError: vars() argument must have __dict__ attribute
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 57, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    raise app_exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 201, in serialize_response
+    return jsonable_encoder(response_content)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 289, in jsonable_encoder
+    encoded_value = jsonable_encoder(
+                    ^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 289, in jsonable_encoder
+    encoded_value = jsonable_encoder(
+                    ^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 332, in jsonable_encoder
+    raise ValueError(errors) from e
+ValueError: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:49:29,438 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mode&normalize_method=standard&remove_outliers_flag=true&outlier_method=iqr
+2025-06-18 20:49:29,438 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-18 20:49:29,438 - models.preprocessing - INFO - Handling missing values with strategy: mode
+2025-06-18 20:49:29,440 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-18 20:49:29,445 - models.preprocessing - INFO - Normalizing data with method: standard
+2025-06-18 20:49:29,449 - models.preprocessing - INFO - Preprocessing completed. Shape: (990, 10)
+2025-06-18 20:49:29,451 - main - ERROR - REQUEST FAILED: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:49:29,451 - main - ERROR - GLOBAL ERROR: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:49:29,452 - main - ERROR - Full traceback:
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 324, in jsonable_encoder
+    data = dict(obj)
+           ^^^^^^^^^
+TypeError: 'numpy.int64' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 329, in jsonable_encoder
+    data = vars(obj)
+           ^^^^^^^^^
+TypeError: vars() argument must have __dict__ attribute
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 57, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    raise app_exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 201, in serialize_response
+    return jsonable_encoder(response_content)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 289, in jsonable_encoder
+    encoded_value = jsonable_encoder(
+                    ^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 289, in jsonable_encoder
+    encoded_value = jsonable_encoder(
+                    ^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 332, in jsonable_encoder
+    raise ValueError(errors) from e
+ValueError: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:49:33,018 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mode&normalize_method=standard&remove_outliers_flag=true&outlier_method=iqr
+2025-06-18 20:49:33,019 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-18 20:49:33,019 - models.preprocessing - INFO - Handling missing values with strategy: mode
+2025-06-18 20:49:33,019 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-18 20:49:33,025 - models.preprocessing - INFO - Normalizing data with method: standard
+2025-06-18 20:49:33,029 - models.preprocessing - INFO - Preprocessing completed. Shape: (990, 10)
+2025-06-18 20:49:33,032 - main - ERROR - REQUEST FAILED: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:49:33,032 - main - ERROR - GLOBAL ERROR: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:49:33,032 - main - ERROR - Full traceback:
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 324, in jsonable_encoder
+    data = dict(obj)
+           ^^^^^^^^^
+TypeError: 'numpy.int64' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 329, in jsonable_encoder
+    data = vars(obj)
+           ^^^^^^^^^
+TypeError: vars() argument must have __dict__ attribute
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 57, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    raise app_exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 201, in serialize_response
+    return jsonable_encoder(response_content)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 289, in jsonable_encoder
+    encoded_value = jsonable_encoder(
+                    ^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 289, in jsonable_encoder
+    encoded_value = jsonable_encoder(
+                    ^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 332, in jsonable_encoder
+    raise ValueError(errors) from e
+ValueError: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:49:36,748 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mode&normalize_method=standard&remove_outliers_flag=true&outlier_method=iqr
+2025-06-18 20:49:36,749 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-18 20:49:36,749 - models.preprocessing - INFO - Handling missing values with strategy: mode
+2025-06-18 20:49:36,750 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-18 20:49:36,756 - models.preprocessing - INFO - Normalizing data with method: standard
+2025-06-18 20:49:36,761 - models.preprocessing - INFO - Preprocessing completed. Shape: (990, 10)
+2025-06-18 20:49:36,762 - main - ERROR - REQUEST FAILED: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:49:36,762 - main - ERROR - GLOBAL ERROR: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:49:36,763 - main - ERROR - Full traceback:
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 324, in jsonable_encoder
+    data = dict(obj)
+           ^^^^^^^^^
+TypeError: 'numpy.int64' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 329, in jsonable_encoder
+    data = vars(obj)
+           ^^^^^^^^^
+TypeError: vars() argument must have __dict__ attribute
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 57, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    raise app_exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 201, in serialize_response
+    return jsonable_encoder(response_content)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 289, in jsonable_encoder
+    encoded_value = jsonable_encoder(
+                    ^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 289, in jsonable_encoder
+    encoded_value = jsonable_encoder(
+                    ^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 332, in jsonable_encoder
+    raise ValueError(errors) from e
+ValueError: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:55:11,526 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mode&normalize_method=standard&remove_outliers_flag=true&outlier_method=iqr
+2025-06-18 20:55:11,528 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-18 20:55:11,528 - models.preprocessing - INFO - Handling missing values with strategy: mode
+2025-06-18 20:55:11,528 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-18 20:55:11,533 - models.preprocessing - INFO - Normalizing data with method: standard
+2025-06-18 20:55:11,537 - models.preprocessing - INFO - Preprocessing completed. Shape: (990, 10)
+2025-06-18 20:55:11,539 - main - ERROR - REQUEST FAILED: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:55:11,540 - main - ERROR - GLOBAL ERROR: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-18 20:55:11,540 - main - ERROR - Full traceback:
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 324, in jsonable_encoder
+    data = dict(obj)
+           ^^^^^^^^^
+TypeError: 'numpy.int64' object is not iterable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 329, in jsonable_encoder
+    data = vars(obj)
+           ^^^^^^^^^
+TypeError: vars() argument must have __dict__ attribute
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 176, in __call__
+    with recv_stream, send_stream, collapse_excgroups():
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.11_3.11.2544.0_x64__qbz5n2kfra8p0\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_utils.py", line 82, in collapse_excgroups
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 178, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\main.py", line 57, in log_requests
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 156, in call_next
+    raise app_exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\base.py", line 141, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 714, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 734, in app
+    await route.handle(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\routing.py", line 201, in serialize_response
+    return jsonable_encoder(response_content)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 289, in jsonable_encoder
+    encoded_value = jsonable_encoder(
+                    ^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 289, in jsonable_encoder
+    encoded_value = jsonable_encoder(
+                    ^^^^^^^^^^^^^^^^^
+  File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 332, in jsonable_encoder
+    raise ValueError(errors) from e
+ValueError: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
