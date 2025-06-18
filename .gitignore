@@ -4,6 +4,9 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.py[cod]
+*$py.class
+*.so
 .Python
 env/
 venv/
@@ -17,6 +20,9 @@ pip-delete-this-directory.txt
 *.swp
 *.swo
 *~
+.spyderproject
+.spyproject
+.ropeproject
 
 # OS
 .DS_Store
@@ -41,9 +47,16 @@ pids
 
 # Coverage directory used by tools like istanbul
 coverage/
-
-# nyc test coverage
+htmlcov/
 .nyc_output
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
 
 # Dependency directories
 node_modules/
@@ -67,10 +80,18 @@ jspm_packages/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.production
+.env.staging
+*.env.backup
 
 # Next.js
 .next/
 out/
+.swc/
+.vercel/
+
+# TypeScript
+*.tsbuildinfo
 
 # Production
 /build
@@ -79,10 +100,16 @@ out/
 # Temporary files
 *.tmp
 *.temp
+*.backup
+*.bak
+*.orig
+*.rej
 
 # Backend specific
 *.sqlite3
 *.db
+*.db-journal
+*.sqlite3-journal
 lumenalyze.log
 
 # Python virtual environment
@@ -93,3 +120,52 @@ backend/.env
 frontend/.next/
 frontend/out/
 frontend/build/
+
+# Security & Sensitive Data
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+.secrets/
+api-keys.json
+credentials.json
+
+# Machine Learning
+models/
+*.pkl
+*.joblib
+*.h5
+*.hdf5
+*.model
+*.weights
+data/raw/
+data/processed/
+experiments/
+mlruns/
+.mlflow/
+
+# Prevent nested git repositories
+**/.git/
+.gitmodules
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# ESLint cache
+.eslintcache
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Testing
+test-results/
+playwright-report/
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+.docker
