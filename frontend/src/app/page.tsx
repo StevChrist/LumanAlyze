@@ -1,6 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
+import DataVisualization from '../components/visualization/DataVisualization';
 
 interface FileMetadata {
   filename: string;
@@ -46,6 +49,21 @@ interface PredictionMetrics {
   mse?: number;
   rmse?: number;
   accuracy?: number;
+  mae?: number;
+  median_absolute_error?: number;
+  explained_variance?: number;
+  mean_absolute_percentage_error?: number;
+  mean_residual?: number;
+  std_residual?: number;
+  min_residual?: number;
+  max_residual?: number;
+  precision?: number;
+  recall?: number;
+  f1_score?: number;
+  accuracy_percentage?: number;
+  precision_percentage?: number;
+  recall_percentage?: number;
+  f1_percentage?: number;
 }
 
 interface VisualizationData {
@@ -123,11 +141,17 @@ export default function Home() {
     contamination: 0.1
   });
 
+  // State untuk visualization
+  const [showVisualization, setShowVisualization] = useState(false);
+
   // Error state
   const [errorState, setErrorState] = useState<ErrorState>({
     hasError: false,
     errorMessage: ''
   });
+
+  // Loading message state
+  const [loadingMessage, setLoadingMessage] = useState('');
 
   useEffect(() => {
     setIsClient(true);
@@ -164,6 +188,7 @@ export default function Home() {
   const uploadFileToBackend = async (file: File) => {
     setIsUploading(true);
     setUploadError('');
+    setLoadingMessage('Uploading and processing your file...');
     
     try {
       const formData = new FormData();
@@ -215,11 +240,13 @@ export default function Home() {
       }
     } finally {
       setIsUploading(false);
+      setLoadingMessage('');
     }
   };
 
   const handlePreprocessData = async () => {
     setIsPreprocessing(true);
+    setLoadingMessage('Preprocessing your data...');
     
     try {
       const params = new URLSearchParams({
@@ -247,6 +274,7 @@ export default function Home() {
       handleError(error, 'Preprocessing');
     } finally {
       setIsPreprocessing(false);
+      setLoadingMessage('');
     }
   };
 
@@ -257,6 +285,14 @@ export default function Home() {
     }
     
     setIsAnalyzing(true);
+    
+    // Set loading message berdasarkan kategori
+    const messages = {
+      prediction: 'Running machine learning prediction model...',
+      anomaly: 'Detecting anomalies in your data...',
+      segmentation: 'Performing data clustering analysis...'
+    };
+    setLoadingMessage(messages[selectedCategory as keyof typeof messages] || 'Processing...');
     
     try {
       let endpoint = '';
@@ -302,10 +338,17 @@ export default function Home() {
       const result = await response.json();
       setMlResult(result);
       
+      // Setelah ML analysis selesai, langsung show visualization
+      if (result.status === 'success') {
+        setShowAnalysis(false);
+        setShowVisualization(true);
+      }
+      
     } catch (error: unknown) {
       handleError(error, 'Analysis');
     } finally {
       setIsAnalyzing(false);
+      setLoadingMessage('');
     }
   };
 
@@ -330,8 +373,12 @@ export default function Home() {
     }));
   };
 
-  const handleHowToUseClick = () => {
-    alert('How To Use page will be implemented soon!');
+  const resetToStart = () => {
+    setShowPreprocessing(false);
+    setShowAnalysis(false);
+    setShowVisualization(false);
+    setMlResult(null);
+    setPreprocessingResult(null);
   };
 
   if (!isClient) {
@@ -347,418 +394,408 @@ export default function Home() {
   }
 
   return (
-    <div className="container">
-      <header className="header">
-        <div className="logo">LAM.</div>
-        <nav className="nav-menu">
-          <a href="#" className="nav-item">Home</a>
-          <a href="#" className="nav-item">About</a>
-          <a href="#" className="nav-item" onClick={handleHowToUseClick}>How To Use</a>
-        </nav>
-      </header>
+    <>
+      {/* Loading Overlay - akan muncul saat model dijalankan */}
+      <LoadingOverlay 
+        isVisible={isAnalyzing || isPreprocessing || isUploading}
+        message={loadingMessage}
+        analysisType={isAnalyzing ? selectedCategory : isPreprocessing ? 'preprocessing' : 'upload'}
+      />
 
-      <main className="main-content">
-        <h1 className="main-title">Welcome to LumenALYZE</h1>
-        
-        {/* Global Error Display */}
-        {errorState.hasError && (
-          <div className="error-message">
-            {errorState.errorMessage}
-          </div>
-        )}
-        
-        {!showPreprocessing && !showAnalysis ? (
-          <>
-            {/* Upload Section */}
-            <div className="upload-container">
-              <div className="section-title">Drop your file bellow</div>
-              <div 
-                className={`upload-box ${isUploading ? 'loading' : ''}`}
-                onClick={() => !isUploading && document.getElementById('file-input')?.click()}
-              >
-                <input
-                  type="file"
-                  id="file-input"
-                  accept=".csv,.xlsx,.xls"
-                  onChange={handleFileSelect}
-                  style={{ display: 'none' }}
-                  disabled={isUploading}
-                />
-                <div className="upload-icon">📁</div>
-                <div className="upload-text">csv/xls file</div>
-                <div className="upload-subtitle">
-                  {isUploading ? 'Uploading...' : 'Click to browse or drag and drop your file here'}
-                </div>
-              </div>
-              
-              {selectedFile && (
-                <div className="file-status">
-                  <p className="file-selected">
-                    Selected: <strong>{selectedFile.name}</strong>
-                  </p>
-                  {isUploading && (
-                    <p className="file-processing">
-                      Processing file...
-                    </p>
-                  )}
-                </div>
-              )}
-              
-              {uploadError && (
-                <div className="error-message">
-                  <div>{uploadError}</div>
-                  {uploadError.includes('File encoding error') && (
-                    <div className="error-help">
-                      Read <span 
-                        className="error-link"
-                        onClick={handleHowToUseClick}
-                      >
-                        &quot;How To Use&quot;
-                      </span> to understand how this can work
-                    </div>
-                  )}
-                </div>
-              )}
-              
-              {fileMetadata && (
-                <div className="success-message">
-                  <p><strong>File uploaded successfully!</strong></p>
-                  <p>Rows: {fileMetadata.rows} | Columns: {fileMetadata.columns}</p>
-                  <p>Numeric columns: {fileMetadata.numeric_columns.length}</p>
-                </div>
-              )}
+      <div className="container">
+        <main className="main-content">
+          <h1 className="main-title">Welcome to LumenALYZE</h1>
+          
+          {/* Global Error Display */}
+          {errorState.hasError && (
+            <div className="error-message">
+              {errorState.errorMessage}
             </div>
+          )}
+          
+          {!showPreprocessing && !showAnalysis && !showVisualization ? (
+            <>
+              {/* Upload Section */}
+              <div className="upload-container">
+                <div className="section-title">Drop your file bellow</div>
+                <div 
+                  className={`upload-box ${isUploading ? 'loading' : ''}`}
+                  onClick={() => !isUploading && document.getElementById('file-input')?.click()}
+                >
+                  <input
+                    type="file"
+                    id="file-input"
+                    accept=".csv,.xlsx,.xls"
+                    onChange={handleFileSelect}
+                    style={{ display: 'none' }}
+                    disabled={isUploading}
+                  />
+                  <div className="upload-icon">📁</div>
+                  <div className="upload-text">csv/xls file</div>
+                  <div className="upload-subtitle">
+                    {isUploading ? 'Uploading...' : 'Click to browse or drag and drop your file here'}
+                  </div>
+                </div>
+                
+                {selectedFile && (
+                  <div className="file-status">
+                    <p className="file-selected">
+                      Selected: <strong>{selectedFile.name}</strong>
+                    </p>
+                    {isUploading && (
+                      <p className="file-processing">
+                        Processing file...
+                      </p>
+                    )}
+                  </div>
+                )}
+                
+                {uploadError && (
+                  <div className="error-message">
+                    <div>{uploadError}</div>
+                    {uploadError.includes('File encoding error') && (
+                      <div className="error-help">
+                        Read <Link href="/how-to-use" className="error-link">
+                          How To Use
+                        </Link> to understand how this can work
+                      </div>
+                    )}
+                  </div>
+                )}
+                
+                {fileMetadata && (
+                  <div className="success-message">
+                    <p><strong>File uploaded successfully!</strong></p>
+                    <p>Rows: {fileMetadata.rows} | Columns: {fileMetadata.columns}</p>
+                    <p>Numeric columns: {fileMetadata.numeric_columns.length}</p>
+                  </div>
+                )}
+              </div>
 
-            {/* Data Preview */}
-            {fileMetadata && (
-              <div className="preview-container">
-                <h3 className="preview-title">Data Preview</h3>
-                <div className="preview-table-wrapper">
-                  <table className="preview-table">
-                    <thead>
-                      <tr>
-                        {fileMetadata.column_names.map((col, idx) => (
-                          <th key={idx}>{col}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {fileMetadata.preview.slice(0, 3).map((row, idx) => (
-                        <tr key={idx}>
-                          {fileMetadata.column_names.map((col, colIdx) => (
-                            <td key={colIdx}>
-                              {row[col] ?? 'N/A'}
-                            </td>
+              {/* Data Preview */}
+              {fileMetadata && (
+                <div className="preview-container">
+                  <h3 className="preview-title">Data Preview</h3>
+                  <div className="preview-table-wrapper">
+                    <table className="preview-table">
+                      <thead>
+                        <tr>
+                          {fileMetadata.column_names.map((col, idx) => (
+                            <th key={idx}>{col}</th>
                           ))}
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {fileMetadata.preview.slice(0, 3).map((row, idx) => (
+                          <tr key={idx}>
+                            {fileMetadata.column_names.map((col, colIdx) => (
+                              <td key={colIdx}>
+                                {row[col] ?? 'N/A'}
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
 
-            {/* Category Section */}
-            <div className="category-section">
-              <div className="category-title">What Category you want to analyst?</div>
-              <div className="category-options">
-                <label className="category-option">
-                  <input
-                    type="radio"
-                    name="category"
-                    value="prediction"
-                    checked={selectedCategory === 'prediction'}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="category-radio"
-                  />
-                  <span className="category-label">Prediction</span>
-                </label>
-                <label className="category-option">
-                  <input
-                    type="radio"
-                    name="category"
-                    value="anomaly"
-                    checked={selectedCategory === 'anomaly'}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="category-radio"
-                  />
-                  <span className="category-label">Anomaly Detection</span>
-                </label>
-                <label className="category-option">
-                  <input
-                    type="radio"
-                    name="category"
-                    value="segmentation"
-                    checked={selectedCategory === 'segmentation'}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="category-radio"
-                  />
-                  <span className="category-label">Segmentation</span>
-                </label>
-              </div>
-            </div>
-
-            {/* Continue Button */}
-            <button
-              onClick={() => {
-                if (!fileMetadata) {
-                  alert('Please upload a file first');
-                  return;
-                }
-                setShowPreprocessing(true);
-              }}
-              disabled={!fileMetadata}
-              className="execute-btn"
-            >
-              Continue to Preprocessing
-            </button>
-          </>
-        ) : showPreprocessing ? (
-          <>
-            {/* Preprocessing Section */}
-            <div className="section-container">
-              <h2 className="section-heading">Data Preprocessing</h2>
-
-              <div className="options-container">
-                <h3 className="options-title">Preprocessing Options</h3>
-
-                <div className="form-group">
-                  <label className="form-label">Missing Values Strategy:</label>
-                  <select
-                    value={preprocessingOptions.missingStrategy}
-                    onChange={(e) => handleSelectChange(e, 'missingStrategy')}
-                    className="form-select"
-                  >
-                    <option value="mean">Fill with Mean</option>
-                    <option value="median">Fill with Median</option>
-                    <option value="mode">Fill with Mode</option>
-                    <option value="drop">Drop Rows</option>
-                  </select>
-                </div>
-
-                <div className="form-group">
-                  <label className="form-label">Normalization:</label>
-                  <select
-                    value={preprocessingOptions.normalizeMethod}
-                    onChange={(e) => handleSelectChange(e, 'normalizeMethod')}
-                    className="form-select"
-                  >
-                    <option value="none">No Normalization</option>
-                    <option value="standard">Standard Scaling</option>
-                    <option value="minmax">Min-Max Scaling</option>
-                  </select>
-                </div>
-
-                <div className="preprocessing-checkbox">
-                  <input
-                    type="checkbox"
-                    checked={preprocessingOptions.removeOutliers}
-                    onChange={(e) => setPreprocessingOptions(prev => ({
-                      ...prev,
-                      removeOutliers: e.target.checked
-                    }))}
-                    id="remove-outliers"
-                  />
-                  <label htmlFor="remove-outliers">
-                    Remove Outliers (IQR Method)
+              {/* Category Section */}
+              <div className="category-section">
+                <div className="category-title">What Category you want to analyst?</div>
+                <div className="category-options">
+                  <label className="category-option">
+                    <input
+                      type="radio"
+                      name="category"
+                      value="prediction"
+                      checked={selectedCategory === 'prediction'}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      className="category-radio"
+                    />
+                    <span className="category-label">Prediction</span>
+                  </label>
+                  <label className="category-option">
+                    <input
+                      type="radio"
+                      name="category"
+                      value="anomaly"
+                      checked={selectedCategory === 'anomaly'}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      className="category-radio"
+                    />
+                    <span className="category-label">Anomaly Detection</span>
+                  </label>
+                  <label className="category-option">
+                    <input
+                      type="radio"
+                      name="category"
+                      value="segmentation"
+                      checked={selectedCategory === 'segmentation'}
+                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      className="category-radio"
+                    />
+                    <span className="category-label">Segmentation</span>
                   </label>
                 </div>
-
-                <button
-                  onClick={handlePreprocessData}
-                  disabled={isPreprocessing}
-                  className="action-btn"
-                >
-                  {isPreprocessing ? 'Processing...' : 'Apply Preprocessing'}
-                </button>
               </div>
 
-              {preprocessingResult && (
-                <div className="results-container">
-                  <h3 className="results-title">Preprocessing Results</h3>
+              {/* Continue Button */}
+              <button
+                onClick={() => {
+                  if (!fileMetadata) {
+                    alert('Please upload a file first');
+                    return;
+                  }
+                  setShowPreprocessing(true);
+                }}
+                disabled={!fileMetadata}
+                className="execute-btn"
+              >
+                Continue to Preprocessing
+              </button>
+            </>
+          ) : showPreprocessing ? (
+            <>
+              {/* Preprocessing Section */}
+              <div className="section-container">
+                <h2 className="section-heading">Data Preprocessing</h2>
 
-                  <div className="stats-comparison">
-                    <div className="stats-before">
-                      <h4>Before:</h4>
-                      <p>Rows: {preprocessingResult.original_stats.rows}</p>
-                      <p>Missing Values: {preprocessingResult.original_stats.missing_values}</p>
-                    </div>
-                    <div className="stats-after">
-                      <h4>After:</h4>
-                      <p>Rows: {preprocessingResult.processed_stats.rows}</p>
-                      <p>Missing Values: {preprocessingResult.processed_stats.missing_values}</p>
-                    </div>
+                <div className="options-container">
+                  <h3 className="options-title">Preprocessing Options</h3>
+
+                  <div className="form-group">
+                    <label className="form-label">Missing Values Strategy:</label>
+                    <select
+                      value={preprocessingOptions.missingStrategy}
+                      onChange={(e) => handleSelectChange(e, 'missingStrategy')}
+                      className="form-select"
+                    >
+                      <option value="mean">Fill with Mean</option>
+                      <option value="median">Fill with Median</option>
+                      <option value="mode">Fill with Mode</option>
+                      <option value="drop">Drop Rows</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Normalization:</label>
+                    <select
+                      value={preprocessingOptions.normalizeMethod}
+                      onChange={(e) => handleSelectChange(e, 'normalizeMethod')}
+                      className="form-select"
+                    >
+                      <option value="none">No Normalization</option>
+                      <option value="standard">Standard Scaling</option>
+                      <option value="minmax">Min-Max Scaling</option>
+                    </select>
+                  </div>
+
+                  <div className="preprocessing-checkbox">
+                    <input
+                      type="checkbox"
+                      checked={preprocessingOptions.removeOutliers}
+                      onChange={(e) => setPreprocessingOptions(prev => ({
+                        ...prev,
+                        removeOutliers: e.target.checked
+                      }))}
+                      id="remove-outliers"
+                    />
+                    <label htmlFor="remove-outliers">
+                      Remove Outliers (IQR Method)
+                    </label>
                   </div>
 
                   <button
+                    onClick={handlePreprocessData}
+                    disabled={isPreprocessing}
+                    className="action-btn"
+                  >
+                    {isPreprocessing ? 'Processing...' : 'Apply Preprocessing'}
+                  </button>
+                </div>
+
+                {preprocessingResult && (
+                  <div className="results-container">
+                    <h3 className="results-title">Preprocessing Results</h3>
+
+                    <div className="stats-comparison">
+                      <div className="stats-before">
+                        <h4>Before:</h4>
+                        <p>Rows: {preprocessingResult.original_stats.rows}</p>
+                        <p>Missing Values: {preprocessingResult.original_stats.missing_values}</p>
+                      </div>
+                      <div className="stats-after">
+                        <h4>After:</h4>
+                        <p>Rows: {preprocessingResult.processed_stats.rows}</p>
+                        <p>Missing Values: {preprocessingResult.processed_stats.missing_values}</p>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => {
+                        setShowPreprocessing(false);
+                        setShowAnalysis(true);
+                      }}
+                      className="action-btn"
+                    >
+                      Continue to Analysis
+                    </button>
+                  </div>
+                )}
+
+                <button
+                  onClick={() => setShowPreprocessing(false)}
+                  className="back-btn"
+                >
+                  ← Back to Upload
+                </button>
+              </div>
+            </>
+          ) : showAnalysis ? (
+            <>
+              {/* Analysis Section */}
+              <div className="section-container">
+                <h2 className="section-heading">Machine Learning Analysis - {selectedCategory}</h2>
+
+                <div className="options-container">
+                  <h3 className="options-title">Analysis Options</h3>
+
+                  {selectedCategory === 'prediction' && fileMetadata && (
+                    <>
+                      <div className="form-group">
+                        <label className="form-label">Target Column:</label>
+                        <select
+                          value={analysisOptions.targetColumn}
+                          onChange={(e) => setAnalysisOptions(prev => ({
+                            ...prev,
+                            targetColumn: e.target.value
+                          }))}
+                          className="form-select"
+                        >
+                          {fileMetadata.numeric_columns.map(col => (
+                            <option key={col} value={col}>{col}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Model Type:</label>
+                        <select
+                          value={analysisOptions.modelType}
+                          onChange={(e) => setAnalysisOptions(prev => ({
+                            ...prev,
+                            modelType: e.target.value
+                          }))}
+                          className="form-select"
+                        >
+                          <option value="random_forest">Random Forest</option>
+                          <option value="mlp">Neural Network (MLP)</option>
+                        </select>
+                      </div>
+
+                      <div className="form-group">
+                        <label className="form-label">Task Type:</label>
+                        <select
+                          value={analysisOptions.taskType}
+                          onChange={(e) => setAnalysisOptions(prev => ({
+                            ...prev,
+                            taskType: e.target.value
+                          }))}
+                          className="form-select"
+                        >
+                          <option value="regression">Regression</option>
+                          <option value="classification">Classification</option>
+                        </select>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedCategory === 'segmentation' && (
+                    <div className="form-group">
+                      <label className="form-label">Number of Clusters:</label>
+                      <input
+                        type="number"
+                        min="2"
+                        max="10"
+                        value={analysisOptions.nClusters}
+                        onChange={(e) => handleNumberChange(e, 'nClusters')}
+                        className="form-input"
+                      />
+                    </div>
+                  )}
+
+                  {selectedCategory === 'anomaly' && (
+                    <div className="form-group">
+                      <label className="form-label">Contamination Rate:</label>
+                      <input
+                        type="number"
+                        min="0.01"
+                        max="0.5"
+                        step="0.01"
+                        value={analysisOptions.contamination}
+                        onChange={(e) => handleNumberChange(e, 'contamination')}
+                        className="form-input"
+                      />
+                    </div>
+                  )}
+
+                  <button
+                    onClick={handleExecuteAnalysis}
+                    disabled={isAnalyzing}
+                    className="action-btn"
+                  >
+                    {isAnalyzing ? 'Analyzing...' : 'Run Analysis'}
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => setShowAnalysis(false)}
+                  className="back-btn"
+                >
+                  ← Back to Preprocessing
+                </button>
+              </div>
+            </>
+          ) : showVisualization && mlResult ? (
+            <>
+              {/* Visualization Section */}
+              <div className="section-container">
+                <DataVisualization 
+                  analysisResults={mlResult}
+                  analysisType={selectedCategory}
+                />
+                
+                <div style={{ 
+                  display: 'flex', 
+                  gap: '16px', 
+                  justifyContent: 'center',
+                  marginTop: '24px',
+                  flexWrap: 'wrap'
+                }}>
+                  <button
+                    onClick={resetToStart}
+                    className="back-btn"
+                  >
+                    ← Start New Analysis
+                  </button>
+                  
+                  <button
                     onClick={() => {
-                      setShowPreprocessing(false);
+                      setShowVisualization(false);
                       setShowAnalysis(true);
                     }}
                     className="action-btn"
                   >
-                    Continue to Analysis
+                    Back to Analysis Options
                   </button>
                 </div>
-              )}
-
-              <button
-                onClick={() => setShowPreprocessing(false)}
-                className="back-btn"
-              >
-                ← Back to Upload
-              </button>
-            </div>
-          </>
-        ) : (
-          <>
-            {/* Analysis Section */}
-            <div className="section-container">
-              <h2 className="section-heading">Machine Learning Analysis - {selectedCategory}</h2>
-
-              <div className="options-container">
-                <h3 className="options-title">Analysis Options</h3>
-
-                {selectedCategory === 'prediction' && fileMetadata && (
-                  <>
-                    <div className="form-group">
-                      <label className="form-label">Target Column:</label>
-                      <select
-                        value={analysisOptions.targetColumn}
-                        onChange={(e) => setAnalysisOptions(prev => ({
-                          ...prev,
-                          targetColumn: e.target.value
-                        }))}
-                        className="form-select"
-                      >
-                        {fileMetadata.numeric_columns.map(col => (
-                          <option key={col} value={col}>{col}</option>
-                        ))}
-                      </select>
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Model Type:</label>
-                      <select
-                        value={analysisOptions.modelType}
-                        onChange={(e) => setAnalysisOptions(prev => ({
-                          ...prev,
-                          modelType: e.target.value
-                        }))}
-                        className="form-select"
-                      >
-                        <option value="random_forest">Random Forest</option>
-                        <option value="mlp">Neural Network (MLP)</option>
-                      </select>
-                    </div>
-
-                    <div className="form-group">
-                      <label className="form-label">Task Type:</label>
-                      <select
-                        value={analysisOptions.taskType}
-                        onChange={(e) => setAnalysisOptions(prev => ({
-                          ...prev,
-                          taskType: e.target.value
-                        }))}
-                        className="form-select"
-                      >
-                        <option value="regression">Regression</option>
-                        <option value="classification">Classification</option>
-                      </select>
-                    </div>
-                  </>
-                )}
-
-                {selectedCategory === 'segmentation' && (
-                  <div className="form-group">
-                    <label className="form-label">Number of Clusters:</label>
-                    <input
-                      type="number"
-                      min="2"
-                      max="10"
-                      value={analysisOptions.nClusters}
-                      onChange={(e) => handleNumberChange(e, 'nClusters')}
-                      className="form-input"
-                    />
-                  </div>
-                )}
-
-                {selectedCategory === 'anomaly' && (
-                  <div className="form-group">
-                    <label className="form-label">Contamination Rate:</label>
-                    <input
-                      type="number"
-                      min="0.01"
-                      max="0.5"
-                      step="0.01"
-                      value={analysisOptions.contamination}
-                      onChange={(e) => handleNumberChange(e, 'contamination')}
-                      className="form-input"
-                    />
-                  </div>
-                )}
-
-                <button
-                  onClick={handleExecuteAnalysis}
-                  disabled={isAnalyzing}
-                  className="action-btn"
-                >
-                  {isAnalyzing ? 'Analyzing...' : 'Run Analysis'}
-                </button>
               </div>
-
-              {/* Results Section */}
-              {mlResult && (
-                <div className="results-container">
-                  <h3 className="results-title">Analysis Results - {mlResult.model_type}</h3>
-                  
-                  {selectedCategory === 'prediction' && mlResult.metrics && (
-                    <div className="metrics-display">
-                      <h4>Model Performance:</h4>
-                      {mlResult.metrics.r2_score && (
-                        <p>R² Score: {mlResult.metrics.r2_score.toFixed(4)}</p>
-                      )}
-                      {mlResult.metrics.accuracy && (
-                        <p>Accuracy: {(mlResult.metrics.accuracy * 100).toFixed(2)}%</p>
-                      )}
-                      {mlResult.training_samples && (
-                        <p>Training Samples: {mlResult.training_samples} | Test Samples: {mlResult.test_samples}</p>
-                      )}
-                    </div>
-                  )}
-                  
-                  {selectedCategory === 'anomaly' && (
-                    <div className="metrics-display">
-                      <h4>Anomaly Detection:</h4>
-                      <p>Anomalies Found: {mlResult.num_anomalies} ({mlResult.anomaly_percentage?.toFixed(2)}%)</p>
-                      <p>Total Samples: {mlResult.total_samples}</p>
-                    </div>
-                  )}
-                  
-                  {selectedCategory === 'segmentation' && mlResult.evaluation && (
-                    <div className="metrics-display">
-                      <h4>Clustering Results:</h4>
-                      <p>Number of Clusters: {mlResult.evaluation.num_clusters}</p>
-                      <p>Silhouette Score: {mlResult.evaluation.silhouette_score?.toFixed(4)}</p>
-                      <p>Total Samples: {mlResult.total_samples}</p>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              <button
-                onClick={() => {
-                  setShowAnalysis(false);
-                  setMlResult(null);
-                }}
-                className="back-btn"
-              >
-                ← Back to Upload
-              </button>
-            </div>
-          </>
-        )}
-      </main>
-    </div>
+            </>
+          ) : null}
+        </main>
+      </div>
+    </>
   );
 }

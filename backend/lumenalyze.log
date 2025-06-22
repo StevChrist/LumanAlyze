@@ -1372,3 +1372,147 @@ Traceback (most recent call last):
   File "D:\.Portofolio\Coding\LumenaLyze\backend\venv\Lib\site-packages\fastapi\encoders.py", line 332, in jsonable_encoder
     raise ValueError(errors) from e
 ValueError: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars() argument must have __dict__ attribute')]
+2025-06-22 06:03:16,383 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-22 06:03:16,782 - utils.data_handler - INFO - Processing file: Customer Dataset 1.csv
+2025-06-22 06:03:16,833 - utils.data_handler - ERROR - Upload failed: 'utf-8' codec can't decode byte 0xa3 in position 3394770: invalid start byte
+2025-06-22 06:03:16,833 - main - ERROR - UPLOAD FAILED: 500: Error processing file: 'utf-8' codec can't decode byte 0xa3 in position 3394770: invalid start byte
+2025-06-22 06:03:16,837 - main - INFO - RESPONSE: Status 500 | Time: 0.454s
+2025-06-22 06:05:42,162 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-22 06:05:42,304 - utils.data_handler - INFO - Processing file: Customer Dataset 1.csv
+2025-06-22 06:05:42,345 - utils.data_handler - WARNING - Failed to read with encoding utf-8: 'utf-8' codec can't decode byte 0xa3 in position 3394770: invalid start byte
+2025-06-22 06:05:42,455 - utils.data_handler - WARNING - Error reading with encoding latin1: Error tokenizing data. C error: Expected 1 fields in line 4, saw 2
+
+2025-06-22 06:05:42,635 - utils.data_handler - WARNING - Error reading with encoding windows-1252: Error tokenizing data. C error: Expected 1 fields in line 4, saw 2
+
+2025-06-22 06:05:42,754 - utils.data_handler - WARNING - Error reading with encoding iso-8859-1: Error tokenizing data. C error: Expected 1 fields in line 4, saw 2
+
+2025-06-22 06:05:42,931 - utils.data_handler - WARNING - Error reading with encoding cp1252: Error tokenizing data. C error: Expected 1 fields in line 4, saw 2
+
+2025-06-22 06:05:42,943 - main - ERROR - UPLOAD FAILED: 400: Unable to read file. Please ensure it's a valid CSV file with proper encoding (UTF-8, Latin1, or Windows-1252)
+2025-06-22 06:05:42,948 - main - INFO - RESPONSE: Status 500 | Time: 0.786s
+2025-06-22 06:08:11,361 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-22 06:08:11,510 - utils.data_handler - INFO - Processing file: Customer Dataset 1.csv
+2025-06-22 06:08:11,548 - utils.data_handler - WARNING - Failed to read with encoding utf-8: 'utf-8' codec can't decode byte 0xa3 in position 3394770: invalid start byte
+2025-06-22 06:08:14,891 - utils.data_handler - INFO - Successfully read file with encoding: latin1, delimiter: ';'
+2025-06-22 06:08:14,891 - utils.data_handler - INFO - File processed successfully: 541909 rows, 8 columns, encoding: latin1, delimiter: ';'
+2025-06-22 06:08:15,003 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 1.csv
+2025-06-22 06:08:15,011 - main - INFO - RESPONSE: Status 200 | Time: 3.651s
+2025-06-22 06:08:23,619 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=standard&remove_outliers_flag=true&outlier_method=iqr
+2025-06-22 06:08:23,620 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-22 06:08:23,620 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-22 06:08:23,665 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-22 06:08:23,795 - models.preprocessing - INFO - Normalizing data with method: standard
+2025-06-22 06:08:24,537 - models.preprocessing - INFO - Preprocessing completed. Shape: (482488, 8)
+2025-06-22 06:08:24,537 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-22 06:08:24,950 - main - INFO - RESPONSE: Status 200 | Time: 1.331s
+2025-06-22 06:08:34,369 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=Jumlah&model_type=random_forest&task_type=regression
+2025-06-22 06:08:34,370 - main - INFO - Using preprocessed data for prediction
+2025-06-22 06:08:34,370 - models.prediction - INFO - Preparing data with target column: Jumlah
+2025-06-22 06:08:34,452 - models.prediction - INFO - Training Random Forest for regression
+2025-06-22 06:09:11,201 - main - INFO - PREDICTION SUCCESSFUL: random_forest for regression
+2025-06-22 06:09:11,671 - main - INFO - RESPONSE: Status 200 | Time: 37.302s
+2025-06-22 06:09:41,672 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=Jumlah&model_type=random_forest&task_type=regression
+2025-06-22 06:09:41,674 - main - INFO - Using preprocessed data for prediction
+2025-06-22 06:09:41,674 - models.prediction - INFO - Preparing data with target column: Jumlah
+2025-06-22 06:09:41,747 - models.prediction - INFO - Training Random Forest for regression
+2025-06-22 06:10:18,131 - main - INFO - PREDICTION SUCCESSFUL: random_forest for regression
+2025-06-22 06:10:18,471 - main - INFO - RESPONSE: Status 200 | Time: 36.798s
+2025-06-22 06:11:46,499 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-22 06:11:46,507 - utils.data_handler - INFO - Processing file: Customer Dataset 2.csv
+2025-06-22 06:11:46,571 - utils.data_handler - INFO - Successfully read file with encoding: utf-8, delimiter: ','
+2025-06-22 06:11:46,622 - utils.data_handler - INFO - File processed successfully: 7043 rows, 21 columns, encoding: utf-8, delimiter: ','
+2025-06-22 06:11:46,632 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-22 06:11:46,633 - main - INFO - RESPONSE: Status 200 | Time: 0.133s
+2025-06-22 06:12:53,351 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=TotalCharges&model_type=random_forest&task_type=regression
+2025-06-22 06:12:53,353 - main - INFO - Using preprocessed data for prediction
+2025-06-22 06:12:53,353 - models.prediction - INFO - Preparing data with target column: TotalCharges
+2025-06-22 06:12:53,353 - models.prediction - INFO - Training Random Forest for regression
+2025-06-22 06:12:53,363 - main - ERROR - PREDICTION FAILED: Input y contains NaN.
+2025-06-22 06:12:53,363 - main - INFO - RESPONSE: Status 500 | Time: 0.012s
+2025-06-22 06:13:00,402 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=TotalCharges&model_type=random_forest&task_type=regression
+2025-06-22 06:13:00,402 - main - INFO - Using preprocessed data for prediction
+2025-06-22 06:13:00,403 - models.prediction - INFO - Preparing data with target column: TotalCharges
+2025-06-22 06:13:00,405 - models.prediction - INFO - Training Random Forest for regression
+2025-06-22 06:13:00,407 - main - ERROR - PREDICTION FAILED: Input y contains NaN.
+2025-06-22 06:13:00,407 - main - INFO - RESPONSE: Status 500 | Time: 0.005s
+2025-06-22 06:13:08,936 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-22 06:13:08,937 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-22 06:13:08,937 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-22 06:13:08,938 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-22 06:13:08,947 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-22 06:13:08,969 - models.preprocessing - INFO - Preprocessing completed. Shape: (5882, 21)
+2025-06-22 06:13:08,969 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-22 06:13:08,986 - main - INFO - RESPONSE: Status 200 | Time: 0.051s
+2025-06-22 06:13:10,107 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-22 06:13:10,109 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-22 06:13:10,109 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-22 06:13:10,112 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-22 06:13:10,123 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-22 06:13:10,145 - models.preprocessing - INFO - Preprocessing completed. Shape: (5882, 21)
+2025-06-22 06:13:10,145 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-22 06:13:10,166 - main - INFO - RESPONSE: Status 200 | Time: 0.058s
+2025-06-22 06:13:12,874 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=TotalCharges&model_type=random_forest&task_type=regression
+2025-06-22 06:13:12,874 - main - INFO - Using preprocessed data for prediction
+2025-06-22 06:13:12,874 - models.prediction - INFO - Preparing data with target column: TotalCharges
+2025-06-22 06:13:12,880 - models.prediction - INFO - Training Random Forest for regression
+2025-06-22 06:13:13,666 - main - INFO - PREDICTION SUCCESSFUL: random_forest for regression
+2025-06-22 06:13:13,677 - main - INFO - RESPONSE: Status 200 | Time: 0.802s
+2025-06-22 06:23:26,832 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-22 06:23:27,150 - utils.data_handler - INFO - Processing file: Customer Dataset 1.csv
+2025-06-22 06:23:27,197 - utils.data_handler - WARNING - Failed to read with encoding utf-8: 'utf-8' codec can't decode byte 0xa3 in position 3394770: invalid start byte
+2025-06-22 06:23:30,360 - utils.data_handler - INFO - Successfully read file with encoding: latin1, delimiter: ';'
+2025-06-22 06:23:30,365 - utils.data_handler - INFO - File processed successfully: 541909 rows, 8 columns, encoding: latin1, delimiter: ';'
+2025-06-22 06:23:30,546 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 1.csv
+2025-06-22 06:23:30,553 - main - INFO - RESPONSE: Status 200 | Time: 3.720s
+2025-06-22 06:23:35,431 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=none&remove_outliers_flag=true&outlier_method=iqr
+2025-06-22 06:23:35,432 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-22 06:23:35,433 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-22 06:23:35,471 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-22 06:23:36,310 - models.preprocessing - INFO - Preprocessing completed. Shape: (482488, 8)
+2025-06-22 06:23:36,310 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-22 06:23:36,678 - main - INFO - RESPONSE: Status 200 | Time: 1.247s
+2025-06-22 06:23:43,337 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=Jumlah&model_type=random_forest&task_type=regression
+2025-06-22 06:23:43,562 - main - INFO - RESPONSE: Status 500 | Time: 0.226s
+2025-06-22 06:23:54,045 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=standard&remove_outliers_flag=true&outlier_method=iqr
+2025-06-22 06:23:54,046 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-22 06:23:54,046 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-22 06:23:54,082 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-22 06:23:54,218 - models.preprocessing - INFO - Normalizing data with method: standard
+2025-06-22 06:23:55,017 - models.preprocessing - INFO - Preprocessing completed. Shape: (482488, 8)
+2025-06-22 06:23:55,029 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-22 06:23:55,441 - main - INFO - RESPONSE: Status 200 | Time: 1.396s
+2025-06-22 06:23:58,372 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=Jumlah&model_type=random_forest&task_type=regression
+2025-06-22 06:23:58,589 - main - INFO - RESPONSE: Status 500 | Time: 0.217s
+2025-06-22 06:24:55,600 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=Jumlah&model_type=random_forest&task_type=regression
+2025-06-22 06:24:55,761 - main - INFO - RESPONSE: Status 500 | Time: 0.161s
+2025-06-22 06:25:11,258 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=drop&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-22 06:25:11,259 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-22 06:25:11,259 - models.preprocessing - INFO - Handling missing values with strategy: drop
+2025-06-22 06:25:11,427 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-22 06:25:11,535 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-22 06:25:12,180 - models.preprocessing - INFO - Preprocessing completed. Shape: (380147, 8)
+2025-06-22 06:25:12,189 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-22 06:25:12,504 - main - INFO - RESPONSE: Status 200 | Time: 1.246s
+2025-06-22 06:25:15,394 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/detect-anomaly?model_type=isolation_forest&contamination=0.1
+2025-06-22 06:25:23,128 - main - INFO - RESPONSE: Status 200 | Time: 7.733s
+2025-06-22 07:01:58,066 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-22 07:01:58,466 - utils.data_handler - INFO - Processing file: Customer Dataset 1.csv
+2025-06-22 07:01:58,518 - utils.data_handler - WARNING - Failed to read with encoding utf-8: 'utf-8' codec can't decode byte 0xa3 in position 3394770: invalid start byte
+2025-06-22 07:02:02,559 - utils.data_handler - INFO - Successfully read file with encoding: latin1, delimiter: ';'
+2025-06-22 07:02:02,612 - utils.data_handler - INFO - File processed successfully: 541909 rows, 8 columns, encoding: latin1, delimiter: ';'
+2025-06-22 07:02:02,719 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 1.csv
+2025-06-22 07:02:02,728 - main - INFO - RESPONSE: Status 200 | Time: 4.662s
+2025-06-22 07:02:14,325 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-22 07:02:14,325 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-22 07:02:14,325 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-22 07:02:14,372 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-22 07:02:14,526 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-22 07:02:15,151 - models.preprocessing - INFO - Preprocessing completed. Shape: (482488, 8)
+2025-06-22 07:02:15,152 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-22 07:02:15,515 - main - INFO - RESPONSE: Status 200 | Time: 1.190s
+2025-06-22 07:02:19,324 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=Jumlah&model_type=random_forest&task_type=regression
+2025-06-22 07:02:19,574 - main - INFO - RESPONSE: Status 500 | Time: 0.250s
+2025-06-22 07:02:21,608 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=Jumlah&model_type=random_forest&task_type=regression
+2025-06-22 07:02:21,861 - main - INFO - RESPONSE: Status 500 | Time: 0.253s
+2025-06-22 07:02:28,881 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=Jumlah&model_type=mlp&task_type=regression
+2025-06-22 07:02:29,129 - main - INFO - RESPONSE: Status 500 | Time: 0.247s
