@@ -34,9 +34,7 @@ const AboutPage: React.FC = () => {
           marginBottom: '32px',
           color: 'rgba(251, 247, 199, 0.9)'
         }}>
-          LumenALYZE adalah platform machine learning yang dirancang untuk membuat analisis data menjadi mudah dan accessible untuk semua orang. Dengan interface yang intuitif dan algoritma yang powerful, Anda dapat menganalisis data tanpa perlu keahlian programming yang mendalam.
-        </p>
-
+          LumenALYZE is a machine learning platform designed to make data analysis easy and accessible to everyone. With an intuitive interface and powerful algorithms, you can analyze data without the need for in-depth programming skills.        </p>
         <div style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
@@ -61,7 +59,7 @@ const AboutPage: React.FC = () => {
               fontFamily: 'Lora, serif',
               color: 'rgba(251, 247, 199, 0.8)'
             }}>
-              Prediction, Anomaly Detection, dan Segmentation dengan algoritma terdepan
+              Prediction, Anomaly Detection, dan Segmentation
             </p>
           </div>
 
@@ -76,14 +74,14 @@ const AboutPage: React.FC = () => {
               fontFamily: 'Lora, serif',
               marginBottom: '12px'
             }}>
-              📊 Visualisasi
+              📊 Visualization
             </h3>
             <p style={{
               fontSize: '14px',
               fontFamily: 'Lora, serif',
               color: 'rgba(251, 247, 199, 0.8)'
             }}>
-              Interactive charts dan dashboard untuk memahami data dengan mudah
+              Interactive charts and dashboards to easily understand data
             </p>
           </div>
 
@@ -105,10 +103,20 @@ const AboutPage: React.FC = () => {
               fontFamily: 'Lora, serif',
               color: 'rgba(251, 247, 199, 0.8)'
             }}>
-              No coding required - upload data dan dapatkan insights dalam hitungan menit
+              No coding required - upload data and get insights in minutes
             </p>
           </div>
         </div>
+        <p style={{
+          fontSize: '20px',
+          fontFamily: 'Lora, serif',
+          marginTop: '48px',
+          lineHeight: '1.8',
+          marginBottom: '32px',
+          color: 'rgba(251, 247, 199, 0.9)'
+        }}>
+          This project was created by myself and assisted by LLM in the form of Perplexity with Claude 4.0 and Github Copilot with GPT-4.1.
+        </p>
       </main>
     </div>
   );

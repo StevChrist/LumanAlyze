@@ -5,27 +5,25 @@ from datetime import datetime
 import numpy as np
 import math
 import json
+import pandas as pd
 
-# Import semua modules di bagian atas dengan urutan yang benar
+# Import semua modules
 from utils.data_handler import DataHandler
 from utils.json_serializer import safe_json_serializer, serialize_dataframe_preview, serialize_missing_values, clean_data_for_json
 from utils.chart_data_formatter import ChartDataFormatter
 from utils.export_handler import ExportHandler
-
 from models.preprocessing import DataPreprocessor
 from models.prediction import PredictionModel
 from models.anomaly_detection import AnomalyDetector
 from models.segmentation import DataSegmentation
 from models.visualization import DataVisualization
-
 from services.analytics_service import AnalyticsService
 from services.dashboard_service import DashboardService
 from services.report_service import ReportService
-
 from config.settings import settings
 from config.chart_config import CHART_THEMES, CHART_LAYOUTS, DEFAULT_CHART_CONFIG
 
-# Setup logging dengan konfigurasi yang benar
+# Setup logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -34,27 +32,36 @@ logging.basicConfig(
         logging.StreamHandler()
     ]
 )
-
 logger = logging.getLogger(__name__)
 
 # Custom JSON encoder untuk mengatasi error serialization
 class SafeJSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, (np.integer, np.floating)):
-            if np.isnan(obj) or np.isinf(obj) or math.isnan(float(obj)) or math.isinf(float(obj)):
+            if np.isnan(obj) or np.isinf(obj):
                 return None
-            return obj.item()
+            try:
+                converted = float(obj)
+                if math.isnan(converted) or math.isinf(converted) or abs(converted) > 1e308:
+                    return None
+                return converted
+            except (ValueError, OverflowError):
+                return None
         elif isinstance(obj, np.ndarray):
-            # Clean array dari infinity/NaN values
             cleaned_array = np.where(np.isfinite(obj), obj, None)
             return cleaned_array.tolist()
         elif isinstance(obj, float):
-            if math.isnan(obj) or math.isinf(obj):
+            if math.isnan(obj) or math.isinf(obj) or abs(obj) > 1e308:
                 return None
             return obj
-        elif hasattr(obj, 'item'):  # Handle numpy scalars
+        elif pd.isna(obj):
+            return None
+        elif hasattr(obj, 'item'):
             try:
-                return obj.item()
+                item_val = obj.item()
+                if isinstance(item_val, float) and (math.isnan(item_val) or math.isinf(item_val)):
+                    return None
+                return item_val
             except:
                 return str(obj)
         return super().default(obj)
@@ -76,7 +83,7 @@ app.add_middleware(
     expose_headers=["*"]
 )
 
-# Initialize semua handlers di satu tempat
+# Initialize handlers
 data_handler = DataHandler()
 preprocessor = DataPreprocessor()
 prediction_model = PredictionModel()
@@ -89,12 +96,36 @@ analytics_service = AnalyticsService()
 dashboard_service = DashboardService()
 report_service = ReportService()
 
-# Helper function untuk clean data sebelum JSON response
+# Helper function untuk clean data
 def clean_response_data(data):
-    """Clean data untuk menghindari JSON serialization errors"""
-    return clean_data_for_json(data)
+    """Clean data untuk menghindari JSON serialization errors dengan validasi ketat"""
+    if isinstance(data, dict):
+        cleaned = {}
+        for k, v in data.items():
+            cleaned[k] = clean_response_data(v)
+        return cleaned
+    elif isinstance(data, list):
+        return [clean_response_data(item) for item in data]
+    elif isinstance(data, (np.integer, np.floating)):
+        if np.isnan(data) or np.isinf(data):
+            return None
+        try:
+            converted = float(data)
+            if math.isnan(converted) or math.isinf(converted) or abs(converted) > 1e308:
+                return None
+            return converted
+        except (ValueError, OverflowError):
+            return None
+    elif isinstance(data, float):
+        if math.isnan(data) or math.isinf(data) or abs(data) > 1e308:
+            return None
+        return data
+    elif pd.isna(data):
+        return None
+    else:
+        return data
 
-# Middleware untuk logging dengan error handling yang lebih baik
+# Middleware untuk logging
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     start_time = datetime.now()
@@ -135,20 +166,18 @@ def health_check():
 async def upload_csv_options():
     return {"message": "OK"}
 
-# Upload endpoint dengan error handling yang diperbaiki
+# Upload endpoint
 @app.post("/upload-csv")
 async def upload_csv(file: UploadFile = File(...)):
     try:
-        # Validate file size
         if file.size and file.size > settings.MAX_FILE_SIZE:
             raise HTTPException(
                 status_code=413,
                 detail=f"File too large. Maximum size: {settings.MAX_FILE_SIZE / (1024*1024):.1f}MB"
             )
-        
+
         df, numeric_columns = await data_handler.process_csv_upload(file)
         
-        # Clean data sebelum create metadata
         metadata = {
             "filename": file.filename,
             "rows": int(len(df)),
@@ -159,9 +188,7 @@ async def upload_csv(file: UploadFile = File(...)):
             "missing_values": serialize_missing_values(df)
         }
         
-        # Clean metadata untuk menghindari JSON errors
         cleaned_metadata = clean_response_data(metadata)
-        
         logger.info(f"UPLOAD SUCCESSFUL: {file.filename}")
         return {"status": "success", "metadata": cleaned_metadata}
         
@@ -180,16 +207,16 @@ async def preprocess_data(
     try:
         df_original = data_handler.get_dataframe()
         
-        # Apply preprocessing
+        # Apply preprocessing dengan validasi ketat
         df_processed = preprocessor.preprocess_pipeline(
-            df_original, missing_strategy, normalize_method, 
+            df_original, missing_strategy, normalize_method,
             remove_outliers_flag, outlier_method
         )
         
         # Store processed data
         data_handler.store_preprocessed_data(df_processed)
         
-        # Generate response with statistics - dengan safe conversion
+        # Generate response dengan safe conversion
         response_data = {
             "status": "success",
             "original_stats": {
@@ -219,9 +246,8 @@ async def preprocess_data(
             "column_names": df_processed.columns.tolist()
         }
         
-        # Clean response data
+        # Clean response data dengan validasi ketat
         cleaned_response = clean_response_data(response_data)
-        
         return cleaned_response
         
     except Exception as e:
@@ -229,62 +255,100 @@ async def preprocess_data(
         raise HTTPException(status_code=500, detail=f"Error during preprocessing: {str(e)}")
 
 # Machine Learning Endpoints dengan perbaikan JSON handling
-
 @app.post("/run-prediction")
 async def run_prediction(
     target_column: str,
-    model_type: str = "random_forest",  # random_forest atau mlp
-    task_type: str = "regression"       # regression atau classification
+    model_type: str = "random_forest",
+    task_type: str = "regression"
 ):
     try:
-        # Get data
+        # Get data dengan validasi
         try:
             df = data_handler.get_dataframe(preprocessed=True)
+            logger.info("Using preprocessed data for prediction")
         except:
             df = data_handler.get_dataframe(preprocessed=False)
-
-        # Prepare data
+            logger.info("Using raw data for prediction")
+        
+        # Validasi target column
+        if target_column not in df.columns:
+            raise HTTPException(status_code=400, detail=f"Target column '{target_column}' not found")
+        
+        # Prepare data dengan cleaning tambahan
         X = df.drop(columns=[target_column])
         y = df[target_column]
+        
+        # VALIDASI KRITIS: Bersihkan NaN dan infinity
+        mask_y = pd.isna(y) | np.isinf(y)
+        if mask_y.any():
+            logger.warning(f"Removing {mask_y.sum()} invalid target values")
+            y = y[~mask_y]
+            X = X[~mask_y]
+        
+        # Bersihkan features
+        X_numeric = X.select_dtypes(include=[np.number])
+        X_numeric = X_numeric.replace([np.inf, -np.inf], np.nan)
+        X_numeric = X_numeric.fillna(X_numeric.mean())
+        
+        # Validasi final
+        if X_numeric.isnull().any().any():
+            raise HTTPException(status_code=400, detail="Data contains invalid values after cleaning")
+        
+        if y.isnull().any():
+            raise HTTPException(status_code=400, detail="Target variable contains invalid values")
+        
+        # Split data
         from sklearn.model_selection import train_test_split
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-        # Train & predict
+        X_train, X_test, y_train, y_test = train_test_split(
+            X_numeric, y, test_size=0.2, random_state=42
+        )
+        
+        # Train model
         if task_type == "regression":
             from sklearn.ensemble import RandomForestRegressor
-            model = RandomForestRegressor()
+            model = RandomForestRegressor(n_estimators=100, random_state=42)
             model.fit(X_train, y_train)
             y_pred = model.predict(X_test)
+            
+            # VALIDASI PREDICTION RESULTS
+            y_pred = np.where(np.isfinite(y_pred), y_pred, 0)
+            
             from sklearn.metrics import r2_score, mean_squared_error
+            
+            r2 = r2_score(y_test, y_pred)
+            mse = mean_squared_error(y_test, y_pred)
+            rmse = np.sqrt(mse)
+            
+            # Validasi metrics
             metrics = {
-                "r2_score": float(r2_score(y_test, y_pred)),
-                "mse": float(mean_squared_error(y_test, y_pred)),
-                "rmse": float(mean_squared_error(y_test, y_pred, squared=False))
+                "r2_score": float(r2) if math.isfinite(r2) else 0.0,
+                "mse": float(mse) if math.isfinite(mse) else 0.0,
+                "rmse": float(rmse) if math.isfinite(rmse) else 0.0
             }
-        else:
+        
+        else:  # classification
             from sklearn.ensemble import RandomForestClassifier
-            model = RandomForestClassifier()
+            model = RandomForestClassifier(n_estimators=100, random_state=42)
             model.fit(X_train, y_train)
             y_pred = model.predict(X_test)
-            from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+            
+            from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+            
             metrics = {
                 "accuracy": float(accuracy_score(y_test, y_pred)),
                 "precision": float(precision_score(y_test, y_pred, average="weighted", zero_division=0)),
                 "recall": float(recall_score(y_test, y_pred, average="weighted", zero_division=0)),
                 "f1_score": float(f1_score(y_test, y_pred, average="weighted", zero_division=0))
             }
-
-        # Visualisasi
+        
+        # Prepare visualization data dengan safe conversion
         viz_data = {
-            "actual": [float(x) for x in y_test.tolist()],
-            "predicted": [float(x) for x in y_pred.tolist()]
+            "actual": [float(x) if math.isfinite(float(x)) else 0.0 for x in y_test.tolist()],
+            "predicted": [float(x) if math.isfinite(float(x)) else 0.0 for x in y_pred.tolist()]
         }
-        if task_type == "classification":
-            cm = confusion_matrix(y_test, y_pred)
-            viz_data["confusion_matrix"] = cm.tolist()
-            viz_data["labels"] = list(set(y_test) | set(y_pred))
-
-        return {
+        
+        # Final response dengan cleaning
+        response = {
             "status": "success",
             "model_type": model_type,
             "metrics": metrics,
@@ -292,7 +356,15 @@ async def run_prediction(
             "training_samples": int(len(X_train)),
             "test_samples": int(len(X_test))
         }
+        
+        # Clean response sebelum return
+        cleaned_response = clean_response_data(response)
+        
+        logger.info(f"PREDICTION SUCCESSFUL: {model_type} for {task_type}")
+        return cleaned_response
+        
     except Exception as e:
+        logger.error(f"PREDICTION FAILED: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/detect-anomaly")
@@ -305,8 +377,14 @@ async def detect_anomaly(
             df = data_handler.get_dataframe(preprocessed=True)
         except:
             df = data_handler.get_dataframe(preprocessed=False)
+
         from sklearn.preprocessing import StandardScaler
         X = df.select_dtypes(include=[np.number])
+        
+        # Clean data sebelum scaling
+        X = X.replace([np.inf, -np.inf], np.nan)
+        X = X.fillna(X.mean())
+        
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
 
@@ -331,21 +409,26 @@ async def detect_anomaly(
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X_scaled)
 
+        # Clean visualization data
         viz_data = {
-            "data_points": X_pca.tolist(),
+            "data_points": [[float(x) if math.isfinite(x) else 0.0 for x in point] for point in X_pca.tolist()],
             "anomaly_indices": anomaly_indices,
-            "anomaly_scores": scores.tolist()
+            "anomaly_scores": [float(s) if math.isfinite(s) else 0.0 for s in scores.tolist()]
         }
 
-        return {
+        response = {
             "status": "success",
             "model_type": model_type,
             "num_anomalies": n_anomaly,
-            "anomaly_percentage": anomaly_ratio * 100,
+            "anomaly_percentage": float(anomaly_ratio * 100),
             "visualization_data": viz_data,
             "total_samples": int(len(X_scaled))
         }
+        
+        return clean_response_data(response)
+
     except Exception as e:
+        logger.error(f"ANOMALY DETECTION FAILED: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/perform-segmentation")
@@ -358,8 +441,14 @@ async def perform_segmentation(
             df = data_handler.get_dataframe(preprocessed=True)
         except:
             df = data_handler.get_dataframe(preprocessed=False)
+
         from sklearn.preprocessing import StandardScaler
         X = df.select_dtypes(include=[np.number])
+        
+        # Clean data sebelum scaling
+        X = X.replace([np.inf, -np.inf], np.nan)
+        X = X.fillna(X.mean())
+        
         scaler = StandardScaler()
         X_scaled = scaler.fit_transform(X)
 
@@ -382,34 +471,36 @@ async def perform_segmentation(
         pca = PCA(n_components=2)
         X_pca = pca.fit_transform(X_scaled)
 
+        # Clean visualization data
         viz_data = {
-            "data_points": X_pca.tolist(),
+            "data_points": [[float(x) if math.isfinite(x) else 0.0 for x in point] for point in X_pca.tolist()],
             "cluster_labels": [int(x) for x in labels.tolist()],
-            "cluster_centers": centers.tolist() if centers is not None else None
+            "cluster_centers": [[float(x) if math.isfinite(x) else 0.0 for x in center] for center in centers.tolist()] if centers is not None else None
         }
 
-        return {
+        response = {
             "status": "success",
             "model_type": model_type,
             "evaluation": {"silhouette_score": sil_score, "num_clusters": len(set(labels))},
             "visualization_data": viz_data,
             "total_samples": int(len(X_scaled))
         }
+        
+        return clean_response_data(response)
+
     except Exception as e:
+        logger.error(f"SEGMENTATION FAILED: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 # Additional utility endpoints
-
 @app.get("/preprocessing-status")
 def get_preprocessing_status():
     """Check apakah data sudah di-preprocess"""
     logger.info("Checking preprocessing status")
-    
     if 'dataframe' not in data_handler.uploaded_data:
         return {"status": "no_data", "message": "No data uploaded"}
-    
+
     preprocessing_applied = data_handler.uploaded_data.get('preprocessing_applied', False)
-    
     if preprocessing_applied:
         df = data_handler.uploaded_data['preprocessed_dataframe']
         return {
@@ -434,15 +525,15 @@ def get_data_info():
     if 'dataframe' not in data_handler.uploaded_data:
         logger.warning("No data found in memory")
         raise HTTPException(status_code=404, detail="No data uploaded")
-    
+
     df = data_handler.uploaded_data['dataframe']
     logger.info(f"Data info retrieved for: {data_handler.uploaded_data['filename']}")
-    
+
     # Convert dtypes to safe format
     dtypes_dict = {}
     for col, dtype in df.dtypes.items():
         dtypes_dict[col] = str(dtype)
-    
+
     return {
         "filename": data_handler.uploaded_data['filename'],
         "shape": [int(df.shape[0]), int(df.shape[1])],
@@ -452,180 +543,24 @@ def get_data_info():
         "missing_values": clean_response_data(df.isnull().sum().to_dict())
     }
 
-# Fase 5 endpoints dengan perbaikan
-
-@app.post("/generate-chart-data")
-async def generate_chart_data(
-    analysis_type: str,
-    chart_type: str = "scatter"
-):
-    """Generate formatted data untuk frontend charts"""
-    try:
-        # Get latest analysis results from memory
-        if analysis_type == 'prediction' and 'preprocessed_dataframe' in data_handler.uploaded_data:
-            # Sample data untuk testing
-            sample_data = {
-                'actual': [1.0, 2.0, 3.0, 4.0, 5.0],
-                'predicted': [1.1, 1.9, 3.2, 3.8, 5.1],
-                'feature_names': ['feature_1', 'feature_2']
-            }
-            
-            chart_data = data_visualization.prepare_prediction_chart_data(
-                sample_data['actual'],
-                sample_data['predicted'], 
-                sample_data['feature_names']
-            )
-            
-            formatted_data = chart_formatter.format_for_plotly(chart_data, chart_type)
-            
-            return {
-                "status": "success",
-                "chart_data": clean_response_data(formatted_data),
-                "chart_type": chart_type
-            }
-        
-        else:
-            raise HTTPException(status_code=404, detail="No analysis results found")
-            
-    except Exception as e:
-        logger.error(f"CHART DATA GENERATION FAILED: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error generating chart data: {str(e)}")
-
-@app.post("/export-results")
-async def export_results(
-    export_format: str = "csv",
-    analysis_results: dict = None
-):
-    """Export analysis results dalam berbagai format"""
-    try:
-        if export_format not in settings.EXPORT_FORMATS:
-            raise HTTPException(status_code=400, detail=f"Unsupported export format. Supported: {settings.EXPORT_FORMATS}")
-        
-        if analysis_results is None:
-            # Get latest results from memory (placeholder)
-            analysis_results = {"status": "no_data", "message": "No analysis results available"}
-        
-        if export_format.lower() == 'csv':
-            result = export_handler.export_to_csv(analysis_results)
-        elif export_format.lower() == 'json':
-            result = export_handler.export_to_json(analysis_results)
-        elif export_format.lower() == 'excel':
-            result = export_handler.export_to_excel(analysis_results)
-        else:
-            raise HTTPException(status_code=400, detail="Unsupported export format")
-        
-        logger.info(f"EXPORT SUCCESSFUL: {export_format}")
-        return clean_response_data(result)
-        
-    except Exception as e:
-        logger.error(f"EXPORT FAILED: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error during export: {str(e)}")
-
-@app.post("/generate-pdf-report")
-async def generate_pdf_report(analysis_results: dict = None):
-    """Generate comprehensive PDF report"""
-    try:
-        if analysis_results is None:
-            analysis_results = {
-                "model_type": "RandomForest_regression",
-                "status": "success",
-                "metrics": {"r2_score": 0.85, "mse": 0.12},
-                "training_samples": 800,
-                "test_samples": 200
-            }
-        
-        pdf_report = report_service.generate_pdf_report(analysis_results)
-        
-        logger.info("PDF REPORT GENERATED")
-        return clean_response_data(pdf_report)
-        
-    except Exception as e:
-        logger.error(f"PDF REPORT GENERATION FAILED: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error generating PDF report: {str(e)}")
-
-@app.get("/generate-summary-report")
-async def generate_summary_report():
-    """Generate comprehensive summary report"""
-    try:
-        # Get latest analysis results (placeholder)
-        analysis_results = {
-            "model_type": "RandomForest_regression",
-            "status": "success",
-            "metrics": {"r2_score": 0.85, "mse": 0.12},
-            "training_samples": 800,
-            "test_samples": 200
-        }
-        
-        summary_report = export_handler.generate_summary_report(analysis_results)
-        
-        logger.info("SUMMARY REPORT GENERATED")
+# Error handlers
+@app.exception_handler(ValueError)
+async def value_error_handler(request: Request, exc: ValueError):
+    if "JSON compliant" in str(exc):
+        logger.error(f"JSON Compliance Error: {str(exc)}")
         return {
-            "status": "success",
-            "report": clean_response_data(summary_report)
+            "error": "Data processing error",
+            "detail": "Invalid numeric values detected. Please check your data for NaN or infinity values.",
+            "suggestion": "Try preprocessing your data first or check for missing values."
         }
-        
-    except Exception as e:
-        logger.error(f"SUMMARY REPORT GENERATION FAILED: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error generating summary report: {str(e)}")
+    raise exc
 
-@app.get("/analytics-insights")
-async def get_analytics_insights(analysis_id: str = "latest"):
-    """Get automated insights from analysis results"""
-    try:
-        # Placeholder analysis results
-        analysis_results = {
-            "model_type": "RandomForest_regression",
-            "status": "success",
-            "metrics": {"r2_score": 0.85, "mse": 0.12},
-            "training_samples": 800,
-            "test_samples": 200
-        }
-        
-        insights = analytics_service.generate_insights(analysis_results)
-        
-        logger.info("ANALYTICS INSIGHTS GENERATED")
-        return {
-            "status": "success",
-            "insights": clean_response_data(insights)
-        }
-        
-    except Exception as e:
-        logger.error(f"ANALYTICS INSIGHTS FAILED: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error generating insights: {str(e)}")
-
-@app.post("/dashboard-data")
-async def get_dashboard_data():
-    """Get dashboard data for analytics overview"""
-    try:
-        # Sample analysis history
-        analysis_history = [
-            {
-                "model_type": "RandomForest_regression",
-                "status": "success",
-                "metrics": {"r2_score": 0.85},
-                "timestamp": datetime.now().isoformat()
-            }
-        ]
-        
-        dashboard_data = dashboard_service.prepare_dashboard_data(analysis_history)
-        
-        logger.info("DASHBOARD DATA GENERATED")
-        return {
-            "status": "success",
-            "dashboard": clean_response_data(dashboard_data)
-        }
-        
-    except Exception as e:
-        logger.error(f"DASHBOARD DATA FAILED: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Error generating dashboard data: {str(e)}")
-
-# Error handler untuk debugging yang diperbaiki
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
     logger.error(f"GLOBAL ERROR: {str(exc)}")
     logger.exception("Full traceback:")
     return {
-        "error": "Internal server error", 
+        "error": "Internal server error",
         "detail": str(exc),
         "path": str(request.url),
         "timestamp": datetime.now().isoformat()
@@ -640,32 +575,14 @@ def api_status():
         "timestamp": datetime.now().isoformat(),
         "version": settings.APP_VERSION,
         "app_name": settings.APP_NAME,
-        "environment": "development" if settings.DEBUG else "production",
-        "endpoints": {
-            "upload": "/upload-csv",
-            "preprocess": "/preprocess-data",
-            "prediction": "/run-prediction",
-            "anomaly": "/detect-anomaly",
-            "segmentation": "/perform-segmentation",
-            "chart_data": "/generate-chart-data",
-            "export": "/export-results",
-            "insights": "/analytics-insights",
-            "dashboard": "/dashboard-data",
-            "pdf_report": "/generate-pdf-report"
-        },
-        "configuration": {
-            "max_file_size_mb": settings.MAX_FILE_SIZE / (1024 * 1024),
-            "allowed_file_types": settings.ALLOWED_FILE_TYPES,
-            "export_formats": settings.EXPORT_FORMATS,
-            "cors_origins": settings.CORS_ORIGINS
-        }
+        "environment": "development" if settings.DEBUG else "production"
     }
 
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
-        app, 
-        host=settings.HOST, 
+        app,
+        host=settings.HOST,
         port=settings.PORT,
         log_level=settings.LOG_LEVEL.lower()
     )

@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 import DataVisualization from '../components/visualization/DataVisualization';
+import { AnalysisResult } from '../types';
+
+type AnalysisCategory = 'prediction' | 'anomaly' | 'clustering';
 
 interface FileMetadata {
   filename: string;
@@ -44,67 +47,6 @@ interface PreprocessingResult {
   column_names: string[];
 }
 
-interface PredictionMetrics {
-  r2_score?: number;
-  mse?: number;
-  rmse?: number;
-  accuracy?: number;
-  mae?: number;
-  median_absolute_error?: number;
-  explained_variance?: number;
-  mean_absolute_percentage_error?: number;
-  mean_residual?: number;
-  std_residual?: number;
-  min_residual?: number;
-  max_residual?: number;
-  precision?: number;
-  recall?: number;
-  f1_score?: number;
-  accuracy_percentage?: number;
-  precision_percentage?: number;
-  recall_percentage?: number;
-  f1_percentage?: number;
-}
-
-interface VisualizationData {
-  actual?: number[];
-  predicted?: number[];
-  feature_names?: string[];
-  anomaly_indices?: number[];
-  anomaly_scores?: number[];
-  data_points?: number[][];
-  cluster_labels?: number[];
-  cluster_centers?: number[][];
-}
-
-interface ClusterEvaluation {
-  silhouette_score?: number;
-  num_clusters?: number;
-  noise_points?: number;
-}
-
-interface ClusterStatistics {
-  [key: string]: {
-    size: number;
-    percentage: number;
-    mean_values: Record<string, number>;
-  };
-}
-
-interface MLResult {
-  status: string;
-  model_type: string;
-  metrics?: PredictionMetrics;
-  visualization_data?: VisualizationData;
-  num_anomalies?: number;
-  anomaly_percentage?: number;
-  evaluation?: ClusterEvaluation;
-  cluster_statistics?: ClusterStatistics;
-  training_samples?: number;
-  test_samples?: number;
-  total_samples?: number;
-}
-
 interface ErrorState {
   hasError: boolean;
   errorMessage: string;
@@ -112,7 +54,8 @@ interface ErrorState {
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState('prediction');
+  // Gabungkan MLResult jadi satu, dan pastikan hanya satu deklarasi
+  const [selectedCategory, setSelectedCategory] = useState<AnalysisCategory>('prediction');
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string>('');
   const [fileMetadata, setFileMetadata] = useState<FileMetadata | null>(null);
@@ -132,7 +75,7 @@ export default function Home() {
   // State untuk ML analysis
   const [showAnalysis, setShowAnalysis] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [mlResult, setMlResult] = useState<MLResult | null>(null);
+  const [mlResult, setMlResult] = useState<AnalysisResult | null>(null);
   const [analysisOptions, setAnalysisOptions] = useState({
     targetColumn: '',
     modelType: 'random_forest',
@@ -287,12 +230,12 @@ export default function Home() {
     setIsAnalyzing(true);
     
     // Set loading message berdasarkan kategori
-    const messages = {
+    const messages: Record<AnalysisCategory, string> = {
       prediction: 'Running machine learning prediction model...',
       anomaly: 'Detecting anomalies in your data...',
-      segmentation: 'Performing data clustering analysis...'
+      clustering: 'Performing data clustering analysis...'
     };
-    setLoadingMessage(messages[selectedCategory as keyof typeof messages] || 'Processing...');
+    setLoadingMessage(messages[selectedCategory]);
     
     try {
       let endpoint = '';
@@ -314,7 +257,7 @@ export default function Home() {
             contamination: analysisOptions.contamination
           };
           break;
-        case 'segmentation':
+        case 'clustering':
           endpoint = 'perform-segmentation';
           params = {
             model_type: 'kmeans',
@@ -373,12 +316,32 @@ export default function Home() {
     }));
   };
 
-  const resetToStart = () => {
-    setShowPreprocessing(false);
-    setShowAnalysis(false);
+  const handleAnalysis = (category: AnalysisCategory) => {
     setShowVisualization(false);
+    setShowAnalysis(true);
     setMlResult(null);
-    setPreprocessingResult(null);
+    setSelectedCategory(category);
+  };
+
+  // Fungsi skala log untuk error metrics
+  const getMSEBarWidth = (mse: number) => {
+    // Skala log: semakin kecil mse, bar semakin pendek
+    // max = 1e-1 (0.1), min = 1e-6 (0.000001)
+    if (mse <= 0) return '0%';
+    const min = 1e-6;
+    const max = 1e-1;
+    const percent = 1 - (Math.log10(mse) - Math.log10(min)) / (Math.log10(max) - Math.log10(min));
+    return `${Math.max(0, Math.min(1, percent)) * 100}%`;
+  };
+
+  const getRMSEBarWidth = (rmse: number) => {
+    // Skala log: semakin kecil rmse, bar semakin pendek
+    // max = 1e-1 (0.1), min = 1e-4 (0.0001)
+    if (rmse <= 0) return '0%';
+    const min = 1e-4;
+    const max = 1e-1;
+    const percent = 1 - (Math.log10(rmse) - Math.log10(min)) / (Math.log10(max) - Math.log10(min));
+    return `${Math.max(0, Math.min(1, percent)) * 100}%`;
   };
 
   if (!isClient) {
@@ -404,7 +367,15 @@ export default function Home() {
 
       <div className="container">
         <main className="main-content">
-          <h1 className="main-title">Welcome to LumenALYZE</h1>
+          {/* CONDITIONAL TITLE - HIDE WHEN RESULTS SHOWN */}
+          {!mlResult && (
+            <h1 className="main-title">Welcome to LumenALYZE</h1>
+          )}
+
+          {/* SHOW RESULTS TITLE WHEN RESULTS AVAILABLE */}
+          {mlResult && (
+            <h1 className="results-main-title">Analysis Results</h1>
+          )}
           
           {/* Global Error Display */}
           {errorState.hasError && (
@@ -476,22 +447,20 @@ export default function Home() {
               {fileMetadata && (
                 <div className="preview-container">
                   <h3 className="preview-title">Data Preview</h3>
-                  <div className="preview-table-wrapper">
-                    <table className="preview-table">
+                  <div className="data-preview-container">
+                    <table className="data-preview-table">
                       <thead>
                         <tr>
-                          {fileMetadata.column_names.map((col, idx) => (
-                            <th key={idx}>{col}</th>
+                          {fileMetadata.column_names.map((col) => (
+                            <th key={col}>{col}</th>
                           ))}
                         </tr>
                       </thead>
                       <tbody>
-                        {fileMetadata.preview.slice(0, 3).map((row, idx) => (
+                        {fileMetadata.preview.map((row, idx) => (
                           <tr key={idx}>
-                            {fileMetadata.column_names.map((col, colIdx) => (
-                              <td key={colIdx}>
-                                {row[col] ?? 'N/A'}
-                              </td>
+                            {fileMetadata.column_names.map((col) => (
+                              <td key={col}>{row[col]}</td>
                             ))}
                           </tr>
                         ))}
@@ -511,7 +480,7 @@ export default function Home() {
                       name="category"
                       value="prediction"
                       checked={selectedCategory === 'prediction'}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      onChange={(e) => setSelectedCategory(e.target.value as AnalysisCategory)}
                       className="category-radio"
                     />
                     <span className="category-label">Prediction</span>
@@ -522,7 +491,7 @@ export default function Home() {
                       name="category"
                       value="anomaly"
                       checked={selectedCategory === 'anomaly'}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      onChange={(e) => setSelectedCategory(e.target.value as AnalysisCategory)}
                       className="category-radio"
                     />
                     <span className="category-label">Anomaly Detection</span>
@@ -531,9 +500,9 @@ export default function Home() {
                     <input
                       type="radio"
                       name="category"
-                      value="segmentation"
-                      checked={selectedCategory === 'segmentation'}
-                      onChange={(e) => setSelectedCategory(e.target.value)}
+                      value="clustering"
+                      checked={selectedCategory === 'clustering'}
+                      onChange={(e) => setSelectedCategory(e.target.value as AnalysisCategory)}
                       className="category-radio"
                     />
                     <span className="category-label">Segmentation</span>
@@ -712,7 +681,7 @@ export default function Home() {
                     </>
                   )}
 
-                  {selectedCategory === 'segmentation' && (
+                  {selectedCategory === 'clustering' && (
                     <div className="form-group">
                       <label className="form-label">Number of Clusters:</label>
                       <input
@@ -760,37 +729,332 @@ export default function Home() {
             </>
           ) : showVisualization && mlResult ? (
             <>
-              {/* Visualization Section */}
               <div className="section-container">
-                <DataVisualization 
-                  analysisResults={mlResult}
-                  analysisType={selectedCategory}
-                />
-                
-                <div style={{ 
-                  display: 'flex', 
-                  gap: '16px', 
-                  justifyContent: 'center',
-                  marginTop: '24px',
-                  flexWrap: 'wrap'
-                }}>
-                  <button
-                    onClick={resetToStart}
-                    className="back-btn"
-                  >
-                    ← Start New Analysis
-                  </button>
-                  
-                  <button
-                    onClick={() => {
-                      setShowVisualization(false);
-                      setShowAnalysis(true);
-                    }}
-                    className="action-btn"
-                  >
-                    Back to Analysis Options
-                  </button>
+                {/* DATA VISUALIZATION */}
+                <div className="visualization-container">
+                  <DataVisualization
+                    analysisResults={mlResult}
+                    analysisType={selectedCategory}
+                    isLoading={isAnalyzing}
+                  />
                 </div>
+
+                {/* MODEL INFORMATION - SIMPLIFIED STRUCTURE */}
+                {mlResult && (
+                  <div className="model-info-section">
+                    <h3 className="model-info-title">Model Information</h3>
+                    <table className="model-info-table">
+                      <tbody>
+                        <tr>
+                          <td className="info-label">Model</td>
+                          <td className="info-value">{mlResult.model_type}</td>
+                        </tr>
+                        <tr>
+                          <td className="info-label">Status</td>
+                          <td className="info-value status-success">{mlResult.status}</td>
+                        </tr>
+                        {'training_samples' in mlResult && (
+                          <>
+                            <tr>
+                              <td className="info-label">Training</td>
+                              <td className="info-value">{mlResult.training_samples}</td>
+                            </tr>
+                            <tr>
+                              <td className="info-label">Test</td>
+                              <td className="info-value">{mlResult.test_samples}</td>
+                            </tr>
+                          </>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {/* METRICS SUMMARY */}
+                {'metrics' in mlResult && (
+                  <div className="metrics-summary-container mt-8 flex flex-col items-center">
+                    <h3 className="metrics-title text-lg font-semibold mb-4">Model Performance Metrics</h3>
+                    
+                    {/* Primary Metrics Cards - TETAP SAMA */}
+                    <div className="metrics-cards-grid grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                      <div className="metric-card primary bg-blue-50 rounded-lg p-4 flex items-center shadow">
+                        <div className="metric-icon text-3xl mr-4">🎯</div>
+                        <div className="metric-content">
+                          <div className="metric-label font-semibold">R² Score</div>
+                          <div className="metric-value text-blue-700 text-xl">
+                            {mlResult.metrics?.r2_score !== undefined
+                              ? mlResult.metrics.r2_score.toFixed(4)
+                              : '0.0000'}
+                          </div>
+                          <div className="metric-description text-xs text-gray-500">Model Accuracy</div>
+                        </div>
+                      </div>
+                      
+                      <div className="metric-card success bg-green-50 rounded-lg p-4 flex items-center shadow">
+                        <div className="metric-icon text-3xl mr-4">✅</div>
+                        <div className="metric-content">
+                          <div className="metric-label font-semibold">MSE</div>
+                          <div className="metric-value text-green-700 text-xl">
+                            {mlResult.metrics?.mse !== undefined
+                              ? mlResult.metrics.mse.toFixed(4)
+                              : '0.0000'}
+                          </div>
+                          <div className="metric-description text-xs text-gray-500">Mean Squared Error</div>
+                        </div>
+                      </div>
+                      
+                      <div className="metric-card info bg-indigo-50 rounded-lg p-4 flex items-center shadow">
+                        <div className="metric-icon text-3xl mr-4">📊</div>
+                        <div className="metric-content">
+                          <div className="metric-label font-semibold">RMSE</div>
+                          <div className="metric-value text-indigo-700 text-xl">
+                            {mlResult.metrics?.rmse !== undefined
+                              ? mlResult.metrics.rmse.toFixed(4)
+                              : '0.0000'}
+                          </div>
+                          <div className="metric-description text-xs text-gray-500">Root Mean Squared Error</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Detailed Metrics Table - TETAP SAMA */}
+                    <div className="detailed-metrics-section w-full max-w-2xl mb-8">
+                      <h4 className="detailed-metrics-title font-semibold mb-2">Detailed Performance Metrics</h4>
+                      <div className="metrics-table-container overflow-x-auto">
+                        <table className="metrics-table min-w-full border border-gray-200 rounded-lg bg-white text-sm shadow">
+                          <thead>
+                            <tr className="bg-gray-50">
+                              <th className="px-4 py-2 text-left">Metric</th>
+                              <th className="px-4 py-2 text-left">Value</th>
+                              <th className="px-4 py-2 text-left">Performance</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="table-row-primary">
+                              <td className="metric-name px-4 py-2 font-medium">
+                                <span className="metric-dot r2 inline-block w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
+                                R² Score
+                              </td>
+                              <td className="metric-value-cell px-4 py-2">
+                                {mlResult.metrics?.r2_score !== undefined
+                                  ? mlResult.metrics.r2_score.toFixed(4)
+                                  : '0.0000'}
+                              </td>
+                              <td className="performance-indicator px-4 py-2">
+                                <div className="performance-bar bg-gray-200 h-2 rounded">
+                                  <div 
+                                    className="performance-fill excellent bg-blue-500 h-2 rounded"
+                                    style={{ 
+                                      width: `${Math.min(100, (mlResult.metrics?.r2_score || 0) * 100)}%` 
+                                    }}
+                                  ></div>
+                                </div>
+                                <span className="performance-text ml-2 text-xs text-blue-700">Excellent</span>
+                              </td>
+                            </tr>
+                            
+                            <tr>
+                              <td className="metric-name px-4 py-2 font-medium">
+                                <span className="metric-dot mse inline-block w-2 h-2 rounded-full bg-green-500 mr-2"></span>
+                                Mean Squared Error
+                              </td>
+                              <td className="metric-value-cell px-4 py-2">
+                                {mlResult.metrics?.mse !== undefined
+                                  ? mlResult.metrics.mse.toFixed(4)
+                                  : '0.0000'}
+                              </td>
+                              <td className="performance-indicator px-4 py-2">
+                                <div className="performance-bar bg-gray-200 h-2 rounded">
+                                  <div
+                                    className="performance-fill good bg-green-500 h-2 rounded"
+                                    style={{ width: getMSEBarWidth(mlResult.metrics?.mse ?? 0) }}
+                                  ></div>
+                                </div>
+                                <span className="performance-text ml-2 text-xs text-green-700">Very Low</span>
+                              </td>
+                            </tr>
+                            
+                            <tr>
+                              <td className="metric-name px-4 py-2 font-medium">
+                                <span className="metric-dot rmse inline-block w-2 h-2 rounded-full bg-indigo-500 mr-2"></span>
+                                Root Mean Squared Error
+                              </td>
+                              <td className="metric-value-cell px-4 py-2">
+                                {mlResult.metrics?.rmse !== undefined
+                                  ? mlResult.metrics.rmse.toFixed(4)
+                                  : '0.0000'}
+                              </td>
+                              <td className="performance-indicator px-4 py-2">
+                                <div className="performance-bar bg-gray-200 h-2 rounded">
+                                  <div
+                                    className="performance-fill good bg-indigo-500 h-2 rounded"
+                                    style={{ width: getRMSEBarWidth(mlResult.metrics?.rmse ?? 0) }}
+                                  ></div>
+                                </div>
+                                <span className="performance-text ml-2 text-xs text-indigo-700">Very Low</span>
+                              </td>
+                            </tr>
+
+                            {/* Classification Metrics (jika ada) */}
+                            {mlResult.metrics?.accuracy !== undefined && (
+                              <>
+                                <tr>
+                                  <td className="metric-name px-4 py-2 font-medium">
+                                    <span className="metric-dot accuracy inline-block w-2 h-2 rounded-full bg-yellow-500 mr-2"></span>
+                                    Accuracy
+                                  </td>
+                                  <td className="metric-value-cell px-4 py-2">
+                                    {(mlResult.metrics.accuracy * 100).toFixed(2)}%
+                                  </td>
+                                  <td className="performance-indicator px-4 py-2">
+                                    <div className="performance-bar bg-gray-200 h-2 rounded">
+                                      <div 
+                                        className="performance-fill excellent bg-yellow-500 h-2 rounded"
+                                        style={{ width: `${mlResult.metrics.accuracy * 100}%` }}
+                                      ></div>
+                                    </div>
+                                    <span className="performance-text ml-2 text-xs text-yellow-700">Excellent</span>
+                                  </td>
+                                </tr>
+                                
+                                <tr>
+                                  <td className="metric-name px-4 py-2 font-medium">
+                                    <span className="metric-dot precision inline-block w-2 h-2 rounded-full bg-purple-500 mr-2"></span>
+                                    Precision
+                                  </td>
+                                  <td className="metric-value-cell px-4 py-2">
+                                    {(mlResult.metrics.precision! * 100).toFixed(2)}%
+                                  </td>
+                                  <td className="performance-indicator px-4 py-2">
+                                    <div className="performance-bar bg-gray-200 h-2 rounded">
+                                      <div 
+                                        className="performance-fill good bg-purple-500 h-2 rounded"
+                                        style={{ width: `${mlResult.metrics.precision! * 100}%` }}
+                                      ></div>
+                                    </div>
+                                    <span className="performance-text ml-2 text-xs text-purple-700">Good</span>
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td className="metric-name px-4 py-2 font-medium">
+                                    <span className="metric-dot recall inline-block w-2 h-2 rounded-full bg-orange-500 mr-2"></span>
+                                    Recall
+                                  </td>
+                                  <td className="metric-value-cell px-4 py-2">
+                                    {(mlResult.metrics.recall! * 100).toFixed(2)}%
+                                  </td>
+                                  <td className="performance-indicator px-4 py-2">
+                                    <div className="performance-bar bg-gray-200 h-2 rounded">
+                                      <div 
+                                        className="performance-fill good bg-orange-500 h-2 rounded"
+                                        style={{ width: `${mlResult.metrics.recall! * 100}%` }}
+                                      ></div>
+                                    </div>
+                                    <span className="performance-text ml-2 text-xs text-orange-700">Good</span>
+                                  </td>
+                                </tr>
+
+                                <tr>
+                                  <td className="metric-name px-4 py-2 font-medium">
+                                    <span className="metric-dot f1 inline-block w-2 h-2 rounded-full bg-pink-500 mr-2"></span>
+                                    F1 Score
+                                  </td>
+                                  <td className="metric-value-cell px-4 py-2">
+                                    {(mlResult.metrics.f1_score! * 100).toFixed(2)}%
+                                  </td>
+                                  <td className="performance-indicator px-4 py-2">
+                                    <div className="performance-bar bg-gray-200 h-2 rounded">
+                                      <div 
+                                        className="performance-fill good bg-pink-500 h-2 rounded"
+                                        style={{ width: `${mlResult.metrics.f1_score! * 100}%` }}
+                                      ></div>
+                                    </div>
+                                    <span className="performance-text ml-2 text-xs text-pink-700">Good</span>
+                                  </td>
+                                </tr>
+                              </>
+                            )}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                    {/* WHAT'S NEXT SECTION - BUTTON YANG DIPERBAIKI */}
+                    {mlResult && (
+                      <div className="whats-next-section">
+                        <h3 className="whats-next-title">What&apos;s Next?</h3>
+                        <p className="whats-next-subtitle">
+                          Explore different analysis types or start fresh with new data
+                        </p>
+                        
+                        <div className="action-buttons-container">
+                          {/* Primary Actions */}
+                          <div className="primary-actions">
+                            <button
+                              onClick={() => handleAnalysis('prediction')}
+                              disabled={isAnalyzing || selectedCategory === 'prediction'}
+                              className="btn-primary-action"
+                            >
+                              <span className="btn-icon">🎯</span>
+                              Try Prediction
+                            </button>
+                            
+                            <button
+                              onClick={() => handleAnalysis('anomaly')}
+                              disabled={isAnalyzing || selectedCategory === 'anomaly'}
+                              className="btn-primary-action"
+                            >
+                              <span className="btn-icon">🔍</span>
+                              Try Anomaly Detection
+                            </button>
+                            
+                            <button
+                              onClick={() => handleAnalysis('clustering')}
+                              disabled={isAnalyzing || selectedCategory === 'clustering'}
+                              className="btn-primary-action"
+                            >
+                              <span className="btn-icon">🔗</span>
+                              Try Clustering
+                            </button>
+                          </div>
+
+                          {/* Secondary Actions */}
+                          <div className="secondary-actions">
+                            <button
+                              onClick={() => {
+                                setShowVisualization(false);
+                                setShowAnalysis(true);
+                                setMlResult(null);
+                              }}
+                              className="btn-secondary-action btn-back"
+                            >
+                              <span className="btn-icon">↩️</span>
+                              Back to Analysis Options
+                            </button>
+                            
+                            <button
+                              onClick={() => {
+                                setSelectedFile(null);
+                                setFileMetadata(null);
+                                setPreprocessingResult(null);
+                                setMlResult(null);
+                                setShowPreprocessing(false);
+                                setShowAnalysis(false);
+                                setShowVisualization(false);
+                              }}
+                              className="btn-secondary-action btn-restart"
+                            >
+                              <span className="btn-icon">🆕</span>
+                              Start Analytics Again
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                    {/* END WHAT'S NEXT SECTION */}
+                  </div>
+                )}
               </div>
             </>
           ) : null}

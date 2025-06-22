@@ -1,6 +1,7 @@
 @import "tailwindcss/preflight";
 @tailwind utilities;
 
+
 :root {
   --color-cream: #FBF7C7;
   --color-dark-green: #014F39;
@@ -42,9 +43,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 0 32px;
+  justify-content: flex-start; /* UBAH dari center */
+  padding: 2rem 1rem; /* SIMPLIFIED padding */
   text-align: center;
+  width: 100%;
 }
 
 .loading-container {
@@ -54,6 +56,18 @@ body {
   height: 100vh;
   color: var(--color-cream);
   font-size: 18px;
+}
+
+/* RESULTS MAIN TITLE - PENGGANTI WELCOME */
+.results-main-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 1.1;
+  color: var(--color-cream);
+  margin-bottom: 32px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-align: center;
 }
 
 /* Typography */
@@ -298,6 +312,7 @@ body {
 .section-container {
   max-width: 800px;
   width: 100%;
+  margin-bottom: 2rem; /* TAMBAHAN: Jarak antar section */
 }
 
 .options-container {
@@ -478,39 +493,188 @@ body {
   text-align: center;
 }
 
-/* Preview Table */
-.preview-container {
-  margin-bottom: 32px;
-  max-width: 800px;
-  width: 100%;
+/* MODEL INFORMATION TABLE SECTION */
+.model-info-section {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  max-width: 350px !important;
+  margin: 2rem auto !important;
+  text-align: center !important;
 }
 
-.preview-table-wrapper {
-  overflow-x: auto;
-  background-color: rgba(251, 247, 199, 0.05);
-  border: 1px solid rgba(251, 247, 199, 0.2);
-  border-radius: 8px;
-  padding: 16px;
+.model-info-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-cream);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.preview-table {
+.model-info-table-container {
+  background: rgba(251, 247, 199, 0.08);
+  border: 2px solid rgba(251, 247, 199, 0.25);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.3);
   width: 100%;
-  border-collapse: collapse;
+  max-width: 400px;
+}
+
+.model-info-table {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: table !important;
+  width: 100% !important;
+  border-collapse: collapse !important;
+  font-family: 'Lora', serif !important;
+  margin: 0 auto !important;
+  background: rgba(251, 247, 199, 0.08) !important;
+  border: 1px solid rgba(251, 247, 199, 0.25) !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2) !important;
+}
+
+.model-info-table tr {
+  border-bottom: 1px solid rgba(251, 247, 199, 0.15);
+  transition: background-color 0.3s ease;
+}
+
+.model-info-table tr:last-child {
+  border-bottom: none;
+}
+
+.model-info-table tr:hover {
+  background: rgba(251, 247, 199, 0.05);
+}
+
+.info-label {
+  padding: 16px 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
   font-size: 14px;
   color: var(--color-cream);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: rgba(251, 247, 199, 0.05);
+  width: 40%;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-.preview-table th {
-  border: 1px solid rgba(251, 247, 199, 0.3);
-  padding: 8px;
-  background-color: rgba(251, 247, 199, 0.1);
-  text-align: left;
-  font-weight: 700;
+.info-value {
+  padding: 16px 20px;
+  font-family: 'Lora', serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--color-cream);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  width: 60%;
 }
 
-.preview-table td {
-  border: 1px solid rgba(251, 247, 199, 0.3);
-  padding: 8px;
+.info-value.status-success {
+  color: #90EE90;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Visualization Container - TAMBAH MARGIN BOTTOM */
+.visualization-container {
+  margin-top: 3rem;
+  margin-bottom: 2rem; /* TAMBAHAN: Jarak dengan model info table */
+  background: rgba(251, 247, 199, 0.05);
+  border: 1px solid rgba(251, 247, 199, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 1000px;
+  position: relative;
+  overflow: hidden; /* TAMBAHAN: Prevent overflow */
+}
+
+.visualization-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-cream);
+  text-align: center;
+  margin-bottom: 2rem; /* TAMBAHAN: Lebih besar margin */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  position: relative;
+}
+
+.chart-container {
+  background: rgba(251, 247, 199, 0.03);
+  border-radius: 12px;
+  padding: 2rem; /* TAMBAHAN: Lebih besar padding */
+  border: 1px solid rgba(251, 247, 199, 0.15);
+  min-height: 500px; /* TAMBAHAN: Lebih tinggi minimum height */
+  position: relative;
+  overflow: visible; /* TAMBAHAN: Allow chart to expand */
+  margin: 1rem 0; /* TAMBAHAN: Margin untuk spacing */
+}
+
+/* PERBAIKAN KHUSUS UNTUK PLOTLY CHART */
+.chart-container > div {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 450px !important;
+}
+
+/* PREVENT TEXT OVERLAP ON CHART */
+.chart-container .plotly-graph-div {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 450px !important;
+}
+
+/* RESPONSIVE CHART SIZING */
+@media (max-width: 768px) {
+  .visualization-container {
+    padding: 1.5rem 1rem;
+    margin-top: 2rem;
+  }
+  
+  .visualization-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .chart-container {
+    padding: 1rem;
+    min-height: 400px;
+  }
+  
+  .chart-container > div,
+  .chart-container .plotly-graph-div {
+    min-height: 350px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .visualization-container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .visualization-title {
+    font-size: 1.3rem;
+  }
+  
+  .chart-container {
+    padding: 0.5rem;
+    min-height: 350px;
+  }
+  
+  .chart-container > div,
+  .chart-container .plotly-graph-div {
+    min-height: 300px !important;
+  }
 }
 
 /* Statistics Display */
@@ -632,6 +796,12 @@ label {
   .form-select, .form-input {
     width: 100%;
   }
+  
+  .whats-next-section {
+    padding: 2rem 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem; /* TAMBAHAN: Jarak footer di mobile */
+  }
 }
 
 @media (max-width: 480px) {
@@ -660,4 +830,963 @@ label {
     justify-content: center;
     text-align: center;
   }
+  
+  .whats-next-section {
+    padding: 1.5rem 1rem;
+    margin-bottom: 2.5rem; /* TAMBAHAN: Jarak footer di mobile kecil */
+  }
+}
+
+/* METRICS SUMMARY STYLING - TEMA LUMENALYZE DARK GREEN */
+.metrics-cards-grid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  width: 100%;
+  flex-wrap: nowrap; /* Mencegah wrap ke baris baru */
+}
+
+.metric-card {
+  background: linear-gradient(135deg, rgba(251, 247, 199, 0.12) 0%, rgba(251, 247, 199, 0.06) 100%);
+  border: 1px solid rgba(251, 247, 199, 0.25);
+  border-radius: 12px;
+  padding: 1.8rem;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  flex: 1; /* Membuat semua card sama lebar */
+  min-width: 0; /* Memungkinkan flex shrink */
+  max-width: none; /* Hapus batasan max-width */
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--color-cream) 0%, rgba(251, 247, 199, 0.5) 100%);
+  transition: width 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  border-color: rgba(251, 247, 199, 0.4);
+}
+
+.metric-card:hover::before {
+  width: 8px;
+}
+
+.metric-card.primary::before {
+  background: linear-gradient(180deg, #FBF7C7 0%, #F5F1A8 100%);
+}
+
+.metric-card.success::before {
+  background: linear-gradient(180deg, #90EE90 0%, #32CD32 100%);
+}
+
+.metric-card.info::before {
+  background: linear-gradient(180deg, #87CEEB 0%, #4682B4 100%);
+}
+
+.metric-icon {
+  font-size: 2.2rem; /* Sedikit lebih kecil untuk fit horizontal */
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(251, 247, 199, 0.15);
+  border: 2px solid rgba(251, 247, 199, 0.3);
+  border-radius: 50%;
+  color: var(--color-cream);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0; /* Mencegah icon mengecil */
+}
+
+.metric-content {
+  flex: 1;
+  min-width: 0; /* Memungkinkan text wrap jika diperlukan */
+}
+
+.metric-label {
+  font-family: 'Lora', serif;
+  font-size: 0.85rem; /* Sedikit lebih kecil untuk fit horizontal */
+  color: var(--color-cream);
+  opacity: 0.8;
+  font-weight: 500;
+  margin-bottom: 0.3rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  white-space: nowrap; /* Mencegah text wrap */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.metric-value {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem; /* Sedikit lebih kecil untuk fit horizontal */
+  font-weight: 700;
+  color: var(--color-cream);
+  margin-bottom: 0.3rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+}
+
+.metric-description {
+  font-family: 'Lora', serif;
+  font-size: 0.7rem; /* Sedikit lebih kecil untuk fit horizontal */
+  color: var(--color-cream);
+  opacity: 0.7;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Detailed Metrics Table - TEMA DARK GREEN */
+.detailed-metrics-section {
+  margin-top: 3rem;
+}
+
+.detailed-metrics-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-cream);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.metrics-table-container {
+  background: rgba(251, 247, 199, 0.05);
+  border: 1px solid rgba(251, 247, 199, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.metrics-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Lora', serif;
+}
+
+.metrics-table thead {
+  background: linear-gradient(135deg, rgba(1, 79, 57, 0.9) 0%, rgba(1, 79, 57, 0.7) 100%);
+}
+
+.metrics-table th {
+  padding: 1.2rem 1.5rem;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: var(--color-cream);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.metrics-table tbody tr {
+  border-bottom: 1px solid rgba(251, 247, 199, 0.15);
+  transition: all 0.3s ease;
+}
+
+.metrics-table tbody tr:hover {
+  background: rgba(251, 247, 199, 0.08);
+}
+
+.metrics-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.metrics-table td {
+  padding: 1.2rem 1.5rem;
+  vertical-align: middle;
+  color: var(--color-cream);
+}
+
+.metric-name {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 500;
+  color: var(--color-cream);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.metric-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.metric-dot.r2 { 
+  background: linear-gradient(135deg, #FBF7C7 0%, #F5F1A8 100%);
+}
+.metric-dot.mse { 
+  background: linear-gradient(135deg, #90EE90 0%, #32CD32 100%);
+}
+.metric-dot.rmse { 
+  background: linear-gradient(135deg, #87CEEB 0%, #4682B4 100%);
+}
+.metric-dot.accuracy { 
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+}
+.metric-dot.precision { 
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF4757 100%);
+}
+
+.metric-value-cell {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: var(--color-cream);
+  font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.performance-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.performance-bar {
+  flex: 1;
+  height: 10px;
+  background: rgba(251, 247, 199, 0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  max-width: 120px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.performance-fill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.6s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.performance-fill.excellent {
+  background: linear-gradient(90deg, #32CD32 0%, #90EE90 100%);
+}
+
+.performance-fill.good {
+  background: linear-gradient(90deg, #4682B4 0%, #87CEEB 100%);
+}
+
+.performance-fill.average {
+  background: linear-gradient(90deg, #FFA500 0%, #FFD700 100%);
+}
+
+.performance-text {
+  font-family: 'Lora', serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-cream);
+  min-width: 70px;
+  opacity: 0.9;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Model Summary - TEMA DARK GREEN */
+.model-summary {
+  margin-top: 3rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  background: rgba(251, 247, 199, 0.05);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(251, 247, 199, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.summary-item {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 8px;
+  background: rgba(251, 247, 199, 0.05);
+  border: 1px solid rgba(251, 247, 199, 0.15);
+  transition: all 0.3s ease;
+}
+
+.summary-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  border-color: rgba(251, 247, 199, 0.3);
+}
+
+.summary-label {
+  display: block;
+  font-family: 'Lora', serif;
+  font-size: 0.9rem;
+  color: var(--color-cream);
+  opacity: 0.8;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.summary-value {
+  display: block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-cream);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* ACTION BUTTONS SECTION - PERBAIKAN YANG HILANG */
+.action-buttons-section {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: rgba(251, 247, 199, 0.05);
+  border: 1px solid rgba(251, 247, 199, 0.2);
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.action-buttons-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-cream);
+  margin-bottom: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.action-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.action-btn-enhanced {
+  background: linear-gradient(135deg, var(--color-cream) 0%, #F5F1A8 100%);
+  color: var(--color-dark-brown);
+  border: none;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-family: 'Lora', serif;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.action-btn-enhanced:hover::before {
+  left: 100%;
+}
+
+.action-btn-enhanced:hover:not(:disabled) {
+  background: linear-gradient(135deg, #F5F1A8 0%, var(--color-cream) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.action-btn-enhanced:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(251, 247, 199, 0.5);
+  transform: none;
+}
+
+.back-btn-enhanced {
+  background: transparent;
+  color: var(--color-cream);
+  border: 2px solid rgba(251, 247, 199, 0.4);
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-btn-enhanced:hover {
+  background: rgba(251, 247, 199, 0.1);
+  border-color: rgba(251, 247, 199, 0.6);
+  transform: translateY(-1px);
+}
+
+/* BUTTON STYLING YANG DIPERBAIKI - TEMA LUMENALYZE */
+.whats-next-section {
+  margin-top: 3rem;
+  margin-bottom: 4rem;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, rgba(251, 247, 199, 0.08) 0%, rgba(251, 247, 199, 0.04) 100%);
+  border: 2px solid rgba(251, 247, 199, 0.25);
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+
+.whats-next-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-cream) 0%, #F5F1A8 50%, var(--color-cream) 100%);
+  border-radius: 16px 16px 0 0;
+}
+
+.whats-next-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--color-cream);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.whats-next-subtitle {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  color: var(--color-cream);
+  opacity: 0.8;
+  margin-bottom: 2rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.action-buttons-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.primary-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.secondary-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+/* PRIMARY ACTION BUTTONS */
+.btn-primary-action {
+  background: linear-gradient(135deg, var(--color-cream) 0%, #F5F1A8 100%);
+  color: var(--color-dark-brown);
+  border: none;
+  border-radius: 10px;
+  padding: 12px 24px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+  min-width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.btn-primary-action::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transition: left 0.6s ease;
+}
+
+.btn-primary-action:hover::before {
+  left: 100%;
+}
+
+.btn-primary-action:hover:not(:disabled) {
+  background: linear-gradient(135deg, #F5F1A8 0%, var(--color-cream) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(251, 247, 199, 0.3);
+}
+
+.btn-primary-action:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: rgba(251, 247, 199, 0.5);
+  transform: none;
+}
+
+/* SECONDARY ACTION BUTTONS */
+.btn-secondary-action {
+  background: transparent;
+  color: var(--color-cream);
+  border: 2px solid rgba(251, 247, 199, 0.4);
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-family: 'Lora', serif;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 160px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-secondary-action::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: rgba(251, 247, 199, 0.1);
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+
+.btn-secondary-action:hover::before {
+  width: 100%;
+}
+
+.btn-secondary-action:hover {
+  border-color: rgba(251, 247, 199, 0.7);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary-action:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* BUTTON ICONS */
+.btn-icon {
+  font-size: 1em;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+}
+
+/* BUTTON VARIANTS */
+.btn-back {
+  border-color: rgba(59, 130, 246, 0.5);
+  color: #93C5FD;
+}
+
+.btn-back:hover {
+  border-color: rgba(59, 130, 246, 0.8);
+  color: #DBEAFE;
+}
+
+.btn-restart {
+  border-color: rgba(16, 185, 129, 0.5);
+  color: #6EE7B7;
+}
+
+.btn-restart:hover {
+  border-color: rgba(16, 185, 129, 0.8);
+  color: #D1FAE5;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .whats-next-section {
+    padding: 2rem 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .whats-next-title {
+    font-size: 1.5rem;
+  }
+  
+  .primary-actions,
+  .secondary-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.8rem;
+  }
+  
+  .btn-primary-action,
+  .btn-secondary-action {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .btn-primary-action {
+    padding: 12px 20px;
+    font-size: 13px;
+  }
+  
+  .btn-secondary-action {
+    padding: 9px 18px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .whats-next-section {
+    padding: 1.5rem 1rem;
+    margin-bottom: 2.5rem;
+  }
+  
+  .whats-next-title {
+    font-size: 1.3rem;
+  }
+  
+  .whats-next-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .btn-primary-action {
+    padding: 10px 18px;
+    font-size: 12px;
+  }
+  
+  .btn-secondary-action {
+    padding: 8px 16px;
+    font-size: 11px;
+  }
+}
+
+/* TAMBAHAN: Pastikan container utama memiliki margin bottom */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* UBAH dari center */
+  padding: 2rem 1rem; /* SIMPLIFIED padding */
+  text-align: center;
+  width: 100%;
+}
+
+/* PERBAIKAN: Jarak antara section */
+.section-container {
+  max-width: 800px;
+  width: 100%;
+  margin-bottom: 2rem; /* TAMBAHAN: Jarak antar section */
+}
+
+/* TAMBAHAN: Jarak khusus untuk section terakhir */
+.section-container:last-child {
+  margin-bottom: 4rem; /* Jarak lebih besar untuk section terakhir */
+}
+
+/* ENSURE PROPER SPACING BETWEEN ELEMENTS */
+.metrics-summary-container + .visualization-container {
+  margin-top: 3rem;
+}
+
+.visualization-container + .model-info-section {
+  margin-top: 2rem;
+}
+
+.model-info-section + .whats-next-section {
+  margin-top: 3rem;
+}
+
+/* PERBAIKAN VISUALIZATION CONTAINER - PREVENT TEXT OVERLAP */
+.visualization-container {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  background: rgba(251, 247, 199, 0.05);
+  border: 1px solid rgba(251, 247, 199, 0.2);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 1000px;
+  position: relative;
+  overflow: hidden; /* TAMBAHAN: Prevent overflow */
+}
+
+.visualization-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-cream);
+  text-align: center;
+  margin-bottom: 2rem; /* TAMBAHAN: Lebih besar margin */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  position: relative;
+}
+
+.chart-container {
+  background: rgba(251, 247, 199, 0.03);
+  border-radius: 12px;
+  padding: 2rem; /* TAMBAHAN: Lebih besar padding */
+  border: 1px solid rgba(251, 247, 199, 0.15);
+  min-height: 500px; /* TAMBAHAN: Lebih tinggi minimum height */
+  position: relative;
+  overflow: visible; /* TAMBAHAN: Allow chart to expand */
+  margin: 1rem 0; /* TAMBAHAN: Margin untuk spacing */
+}
+
+/* PERBAIKAN KHUSUS UNTUK PLOTLY CHART */
+.chart-container > div {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 450px !important;
+}
+
+/* PREVENT TEXT OVERLAP ON CHART */
+.chart-container .plotly-graph-div {
+  width: 100% !important;
+  height: auto !important;
+  min-height: 450px !important;
+}
+
+/* RESPONSIVE CHART SIZING */
+@media (max-width: 768px) {
+  .visualization-container {
+    padding: 1.5rem 1rem;
+    margin-top: 2rem;
+  }
+  
+  .visualization-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .chart-container {
+    padding: 1rem;
+    min-height: 400px;
+  }
+  
+  .chart-container > div,
+  .chart-container .plotly-graph-div {
+    min-height: 350px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .visualization-container {
+    padding: 1rem 0.5rem;
+  }
+  
+  .visualization-title {
+    font-size: 1.3rem;
+  }
+  
+  .chart-container {
+    padding: 0.5rem;
+    min-height: 350px;
+  }
+  
+  .chart-container > div,
+  .chart-container .plotly-graph-div {
+    min-height: 300px !important;
+  }
+}
+
+/* PERFECT CENTER DENGAN FLEXBOX */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* UBAH dari center */
+  padding: 2rem 1rem; /* SIMPLIFIED padding */
+  text-align: center;
+  width: 100%;
+}
+
+/* FORCE CENTER UNTUK MODEL INFO */
+.model-info-section {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  max-width: 350px !important;
+  margin: 2rem auto !important;
+  text-align: center !important;
+}
+
+.model-info-table {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  display: table !important;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .model-info-section {
+    max-width: 90% !important;
+    margin: 1.5rem auto !important;
+  }
+  
+  .model-info-table {
+    max-width: 100% !important;
+  }
+  
+  .info-label, .info-value {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .model-info-section {
+    max-width: 95% !important;
+  }
+  
+  .info-label, .info-value {
+    padding: 6px 8px;
+    font-size: 10px;
+  }
+}
+
+/* Tambahkan di globals.css atau file CSS global Anda */
+
+/* Samakan ukuran subjudul utama pada hasil */
+.metrics-title,
+.detailed-metrics-title,
+.model-info-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  color: var(--color-cream);
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Tambahkan di bagian bawah globals.css */
+
+/* Atur jarak antar box dan subjudul di halaman hasil agar konsisten */
+.visualization-container {
+  margin-bottom: 2.5rem; /* Jarak ke Model Information */
+}
+
+.model-info-section {
+  margin-top: 0;
+  margin-bottom: 2.5rem !important; /* Jarak ke Metrics Summary */
+}
+
+.metrics-summary-container {
+  margin-top: 0;
+  margin-bottom: 2.5rem;
+}
+
+.detailed-metrics-section {
+  margin-top: 0;
+  margin-bottom: 2.5rem;
+}
+
+/* Pastikan subjudul (h3/h4) tidak menambah margin ekstra */
+.metrics-title,
+.detailed-metrics-title,
+.model-info-title {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+/* Responsive: tetap konsisten di mobile */
+@media (max-width: 768px) {
+  .visualization-container,
+  .model-info-section,
+  .metrics-summary-container,
+  .detailed-metrics-section {
+    margin-bottom: 1.5rem !important;
+  }
+}
+
+/* Data Preview Table Styling */
+.data-preview-container {
+  margin: 2rem auto 0 auto;
+  max-width: 95vw;
+  background: rgba(251, 247, 199, 0.04);
+  border: 1px solid rgba(251, 247, 199, 0.18);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  padding: 1.5rem 1rem;
+  overflow-x: auto;
+}
+
+.data-preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Lora', serif;
+  color: var(--color-cream);
+  background: transparent;
+}
+
+.data-preview-table th,
+.data-preview-table td {
+  border: 1px solid rgba(251, 247, 199, 0.12);
+  padding: 0.5rem 1rem;
+  text-align: left;
+  font-size: 0.97rem;
+  background: transparent;
+}
+
+.data-preview-table th {
+  background: rgba(251, 247, 199, 0.08);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  color: var(--color-cream);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.data-preview-table tr:nth-child(even) {
+  background: rgba(251, 247, 199, 0.03);
+}
+
+.data-preview-table tr:hover {
+  background: rgba(251, 247, 199, 0.07);
 }
