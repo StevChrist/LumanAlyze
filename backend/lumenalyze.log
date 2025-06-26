@@ -2043,3 +2043,321 @@ ValueError: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars(
 2025-06-22 17:15:12,200 - models.preprocessing - INFO - Data reduction: 0 rows removed (0.00%)
 2025-06-22 17:15:12,200 - utils.data_handler - INFO - Preprocessed data stored successfully
 2025-06-22 17:15:12,223 - main - INFO - RESPONSE: Status 200 | Time: 0.092s
+2025-06-26 04:28:42,813 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-26 04:28:43,280 - utils.data_handler - INFO - Processing file: Customer Dataset 1.csv
+2025-06-26 04:28:43,330 - utils.data_handler - WARNING - Failed to read with encoding utf-8: 'utf-8' codec can't decode byte 0xa3 in position 3394770: invalid start byte
+2025-06-26 04:28:46,978 - utils.data_handler - INFO - Successfully read file with encoding: latin1, delimiter: ';'
+2025-06-26 04:28:46,985 - utils.data_handler - INFO - File processed successfully: 541909 rows, 8 columns, encoding: latin1, delimiter: ';'
+2025-06-26 04:28:47,132 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 1.csv
+2025-06-26 04:28:47,142 - main - INFO - RESPONSE: Status 200 | Time: 4.329s
+2025-06-26 04:28:53,550 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-26 04:28:53,551 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-26 04:28:53,551 - models.preprocessing - INFO - Initial data shape: (541909, 8)
+2025-06-26 04:28:53,551 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-26 04:28:53,626 - models.preprocessing - INFO - Filled missing values in ID_Customer with 15287.690570239585
+2025-06-26 04:28:53,627 - models.preprocessing - INFO - After missing values handling: (541909, 8)
+2025-06-26 04:28:53,627 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-26 04:28:53,824 - models.preprocessing - INFO - Removed 58619 outlier rows (10.82%)
+2025-06-26 04:28:53,843 - models.preprocessing - INFO - After outlier removal: (483290, 8)
+2025-06-26 04:28:53,843 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-26 04:28:53,936 - models.preprocessing - INFO - Successfully normalized 2 columns
+2025-06-26 04:28:53,948 - models.preprocessing - INFO - After normalization: (483290, 8)
+2025-06-26 04:28:53,949 - models.preprocessing - INFO - Performing final data validation and cleaning
+2025-06-26 04:28:54,569 - models.preprocessing - WARNING - Found 802 invalid values after preprocessing
+2025-06-26 04:28:54,738 - models.preprocessing - INFO - Dropped 802 rows with invalid values
+2025-06-26 04:28:54,761 - models.preprocessing - INFO - Preprocessing completed successfully. Final shape: (482488, 8)
+2025-06-26 04:28:54,762 - models.preprocessing - INFO - Data reduction: 59421 rows removed (10.97%)
+2025-06-26 04:28:54,762 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-26 04:28:55,245 - main - INFO - RESPONSE: Status 200 | Time: 1.695s
+2025-06-26 04:29:04,277 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=Jumlah&model_type=random_forest&task_type=regression
+2025-06-26 04:29:04,278 - main - INFO - Using preprocessed data for prediction
+2025-06-26 04:29:49,127 - main - INFO - PREDICTION SUCCESSFUL: random_forest for regression
+2025-06-26 04:29:49,482 - main - INFO - RESPONSE: Status 200 | Time: 45.206s
+2025-06-26 04:30:53,198 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/detect-anomaly?model_type=isolation_forest&contamination=0.1
+2025-06-26 04:31:07,025 - main - INFO - RESPONSE: Status 200 | Time: 13.827s
+2025-06-26 04:34:48,407 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-26 04:34:48,420 - utils.data_handler - INFO - Processing file: Customer Dataset 2.csv
+2025-06-26 04:34:48,514 - utils.data_handler - INFO - Successfully read file with encoding: utf-8, delimiter: ','
+2025-06-26 04:34:48,578 - utils.data_handler - INFO - File processed successfully: 7043 rows, 21 columns, encoding: utf-8, delimiter: ','
+2025-06-26 04:34:48,585 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-26 04:34:48,586 - main - INFO - RESPONSE: Status 200 | Time: 0.178s
+2025-06-26 04:43:03,891 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-26 04:43:03,891 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-26 04:43:03,891 - models.preprocessing - INFO - Initial data shape: (7043, 21)
+2025-06-26 04:43:03,891 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-26 04:43:03,897 - models.preprocessing - INFO - Filled missing values in TotalCharges with 2283.3004408418656
+2025-06-26 04:43:03,897 - models.preprocessing - INFO - After missing values handling: (7043, 21)
+2025-06-26 04:43:03,897 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-26 04:43:03,899 - models.preprocessing - WARNING - IQR is 0 for SeniorCitizen, skipping outlier removal
+2025-06-26 04:43:03,911 - models.preprocessing - INFO - Removed 0 outlier rows (0.00%)
+2025-06-26 04:43:03,915 - models.preprocessing - INFO - After outlier removal: (7043, 21)
+2025-06-26 04:43:03,915 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-26 04:43:03,922 - models.preprocessing - INFO - Successfully normalized 4 columns
+2025-06-26 04:43:03,923 - models.preprocessing - INFO - After normalization: (7043, 21)
+2025-06-26 04:43:03,923 - models.preprocessing - INFO - Performing final data validation and cleaning
+2025-06-26 04:43:03,947 - models.preprocessing - INFO - Preprocessing completed successfully. Final shape: (7043, 21)
+2025-06-26 04:43:03,947 - models.preprocessing - INFO - Data reduction: 0 rows removed (0.00%)
+2025-06-26 04:43:03,947 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-26 04:43:03,983 - main - INFO - RESPONSE: Status 200 | Time: 0.092s
+2025-06-26 04:43:09,379 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=TotalCharges&model_type=random_forest&task_type=regression
+2025-06-26 04:43:09,380 - main - INFO - Using preprocessed data for prediction
+2025-06-26 04:43:10,477 - main - INFO - PREDICTION SUCCESSFUL: random_forest for regression
+2025-06-26 04:43:10,490 - main - INFO - RESPONSE: Status 200 | Time: 1.110s
+2025-06-26 04:46:18,287 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-26 04:46:18,293 - utils.data_handler - INFO - Processing file: Customer Dataset 2.csv
+2025-06-26 04:46:18,381 - utils.data_handler - INFO - Successfully read file with encoding: utf-8, delimiter: ','
+2025-06-26 04:46:18,381 - utils.data_handler - INFO - File processed successfully: 7043 rows, 21 columns, encoding: utf-8, delimiter: ','
+2025-06-26 04:46:18,392 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-26 04:46:18,392 - main - INFO - RESPONSE: Status 200 | Time: 0.104s
+2025-06-26 04:46:24,621 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-26 04:46:24,621 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-26 04:46:24,623 - models.preprocessing - INFO - Initial data shape: (7043, 21)
+2025-06-26 04:46:24,623 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-26 04:46:24,627 - models.preprocessing - INFO - Filled missing values in TotalCharges with 2283.3004408418656
+2025-06-26 04:46:24,627 - models.preprocessing - INFO - After missing values handling: (7043, 21)
+2025-06-26 04:46:24,628 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-26 04:46:24,634 - models.preprocessing - WARNING - IQR is 0 for SeniorCitizen, skipping outlier removal
+2025-06-26 04:46:24,657 - models.preprocessing - INFO - Removed 0 outlier rows (0.00%)
+2025-06-26 04:46:24,661 - models.preprocessing - INFO - After outlier removal: (7043, 21)
+2025-06-26 04:46:24,661 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-26 04:46:24,670 - models.preprocessing - INFO - Successfully normalized 4 columns
+2025-06-26 04:46:24,670 - models.preprocessing - INFO - After normalization: (7043, 21)
+2025-06-26 04:46:24,671 - models.preprocessing - INFO - Performing final data validation and cleaning
+2025-06-26 04:46:24,699 - models.preprocessing - INFO - Preprocessing completed successfully. Final shape: (7043, 21)
+2025-06-26 04:46:24,699 - models.preprocessing - INFO - Data reduction: 0 rows removed (0.00%)
+2025-06-26 04:46:24,700 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-26 04:46:24,738 - main - INFO - RESPONSE: Status 200 | Time: 0.117s
+2025-06-26 04:46:29,349 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=TotalCharges&model_type=random_forest&task_type=regression
+2025-06-26 04:46:29,349 - main - INFO - Using preprocessed data for prediction
+2025-06-26 04:46:30,380 - main - INFO - PREDICTION SUCCESSFUL: random_forest for regression
+2025-06-26 04:46:30,392 - main - INFO - RESPONSE: Status 200 | Time: 1.043s
+2025-06-26 04:49:59,423 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/detect-anomaly?model_type=isolation_forest&contamination=0.1
+2025-06-26 04:49:59,788 - main - INFO - RESPONSE: Status 200 | Time: 0.365s
+2025-06-26 04:51:30,832 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-26 04:51:30,840 - utils.data_handler - INFO - Processing file: Customer Dataset 2.csv
+2025-06-26 04:51:30,940 - utils.data_handler - INFO - Successfully read file with encoding: utf-8, delimiter: ','
+2025-06-26 04:51:30,942 - utils.data_handler - INFO - File processed successfully: 7043 rows, 21 columns, encoding: utf-8, delimiter: ','
+2025-06-26 04:51:30,950 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-26 04:51:30,951 - main - INFO - RESPONSE: Status 200 | Time: 0.119s
+2025-06-26 04:51:37,659 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-26 04:51:37,660 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-26 04:51:37,660 - models.preprocessing - INFO - Initial data shape: (7043, 21)
+2025-06-26 04:51:37,661 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-26 04:51:37,665 - models.preprocessing - INFO - Filled missing values in TotalCharges with 2283.3004408418656
+2025-06-26 04:51:37,665 - models.preprocessing - INFO - After missing values handling: (7043, 21)
+2025-06-26 04:51:37,667 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-26 04:51:37,672 - models.preprocessing - WARNING - IQR is 0 for SeniorCitizen, skipping outlier removal
+2025-06-26 04:51:37,686 - models.preprocessing - INFO - Removed 0 outlier rows (0.00%)
+2025-06-26 04:51:37,687 - models.preprocessing - INFO - After outlier removal: (7043, 21)
+2025-06-26 04:51:37,690 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-26 04:51:37,698 - models.preprocessing - INFO - Successfully normalized 4 columns
+2025-06-26 04:51:37,699 - models.preprocessing - INFO - After normalization: (7043, 21)
+2025-06-26 04:51:37,699 - models.preprocessing - INFO - Performing final data validation and cleaning
+2025-06-26 04:51:37,728 - models.preprocessing - INFO - Preprocessing completed successfully. Final shape: (7043, 21)
+2025-06-26 04:51:37,728 - models.preprocessing - INFO - Data reduction: 0 rows removed (0.00%)
+2025-06-26 04:51:37,728 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-26 04:51:37,758 - main - INFO - RESPONSE: Status 200 | Time: 0.099s
+2025-06-26 04:51:43,489 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=TotalCharges&model_type=random_forest&task_type=regression
+2025-06-26 04:51:43,490 - main - INFO - Using preprocessed data for prediction
+2025-06-26 04:51:44,507 - main - INFO - PREDICTION SUCCESSFUL: random_forest for regression
+2025-06-26 04:51:44,518 - main - INFO - RESPONSE: Status 200 | Time: 1.029s
+2025-06-26 04:59:05,730 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/detect-anomaly?model_type=isolation_forest&contamination=0.1
+2025-06-26 04:59:06,169 - main - INFO - RESPONSE: Status 200 | Time: 0.439s
+2025-06-26 05:03:42,099 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-26 05:03:42,107 - utils.data_handler - INFO - Processing file: Customer Dataset 2.csv
+2025-06-26 05:03:42,223 - utils.data_handler - INFO - Successfully read file with encoding: utf-8, delimiter: ','
+2025-06-26 05:03:42,223 - utils.data_handler - INFO - File processed successfully: 7043 rows, 21 columns, encoding: utf-8, delimiter: ','
+2025-06-26 05:03:42,239 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-26 05:03:42,239 - main - INFO - RESPONSE: Status 200 | Time: 0.141s
+2025-06-26 05:03:48,947 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-26 05:03:48,947 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-26 05:03:48,947 - models.preprocessing - INFO - Initial data shape: (7043, 21)
+2025-06-26 05:03:48,947 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-26 05:03:48,951 - models.preprocessing - INFO - Filled missing values in TotalCharges with 2283.3004408418656
+2025-06-26 05:03:48,951 - models.preprocessing - INFO - After missing values handling: (7043, 21)
+2025-06-26 05:03:48,951 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-26 05:03:48,951 - models.preprocessing - WARNING - IQR is 0 for SeniorCitizen, skipping outlier removal
+2025-06-26 05:03:48,967 - models.preprocessing - INFO - Removed 0 outlier rows (0.00%)
+2025-06-26 05:03:48,967 - models.preprocessing - INFO - After outlier removal: (7043, 21)
+2025-06-26 05:03:48,967 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-26 05:03:48,979 - models.preprocessing - INFO - Successfully normalized 4 columns
+2025-06-26 05:03:48,979 - models.preprocessing - INFO - After normalization: (7043, 21)
+2025-06-26 05:03:48,979 - models.preprocessing - INFO - Performing final data validation and cleaning
+2025-06-26 05:03:49,010 - models.preprocessing - INFO - Preprocessing completed successfully. Final shape: (7043, 21)
+2025-06-26 05:03:49,010 - models.preprocessing - INFO - Data reduction: 0 rows removed (0.00%)
+2025-06-26 05:03:49,010 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-26 05:03:49,042 - main - INFO - RESPONSE: Status 200 | Time: 0.099s
+2025-06-26 05:03:52,405 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/detect-anomaly?model_type=isolation_forest&contamination=0.1
+2025-06-26 05:03:52,858 - main - INFO - RESPONSE: Status 200 | Time: 0.454s
+2025-06-26 05:05:47,616 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-26 05:05:47,620 - utils.data_handler - INFO - Processing file: Customer Dataset 2.csv
+2025-06-26 05:05:47,720 - utils.data_handler - INFO - Successfully read file with encoding: utf-8, delimiter: ','
+2025-06-26 05:05:47,722 - utils.data_handler - INFO - File processed successfully: 7043 rows, 21 columns, encoding: utf-8, delimiter: ','
+2025-06-26 05:05:47,729 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-26 05:05:47,729 - main - INFO - RESPONSE: Status 200 | Time: 0.113s
+2025-06-26 05:05:53,706 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-26 05:05:53,707 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-26 05:05:53,708 - models.preprocessing - INFO - Initial data shape: (7043, 21)
+2025-06-26 05:05:53,708 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-26 05:05:53,712 - models.preprocessing - INFO - Filled missing values in TotalCharges with 2283.3004408418656
+2025-06-26 05:05:53,713 - models.preprocessing - INFO - After missing values handling: (7043, 21)
+2025-06-26 05:05:53,713 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-26 05:05:53,718 - models.preprocessing - WARNING - IQR is 0 for SeniorCitizen, skipping outlier removal
+2025-06-26 05:05:53,736 - models.preprocessing - INFO - Removed 0 outlier rows (0.00%)
+2025-06-26 05:05:53,738 - models.preprocessing - INFO - After outlier removal: (7043, 21)
+2025-06-26 05:05:53,739 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-26 05:05:53,748 - models.preprocessing - INFO - Successfully normalized 4 columns
+2025-06-26 05:05:53,749 - models.preprocessing - INFO - After normalization: (7043, 21)
+2025-06-26 05:05:53,750 - models.preprocessing - INFO - Performing final data validation and cleaning
+2025-06-26 05:05:53,782 - models.preprocessing - INFO - Preprocessing completed successfully. Final shape: (7043, 21)
+2025-06-26 05:05:53,782 - models.preprocessing - INFO - Data reduction: 0 rows removed (0.00%)
+2025-06-26 05:05:53,782 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-26 05:05:53,823 - main - INFO - RESPONSE: Status 200 | Time: 0.117s
+2025-06-26 05:05:59,174 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=TotalCharges&model_type=random_forest&task_type=regression
+2025-06-26 05:05:59,176 - main - INFO - Using preprocessed data for prediction
+2025-06-26 05:06:00,254 - main - INFO - PREDICTION SUCCESSFUL: random_forest for regression
+2025-06-26 05:06:00,264 - main - INFO - RESPONSE: Status 200 | Time: 1.090s
+2025-06-26 05:07:35,106 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/detect-anomaly?model_type=isolation_forest&contamination=0.1
+2025-06-26 05:07:35,467 - main - INFO - RESPONSE: Status 200 | Time: 0.361s
+2025-06-26 05:17:45,543 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-26 05:17:45,547 - utils.data_handler - INFO - Processing file: Customer Dataset 2.csv
+2025-06-26 05:17:45,634 - utils.data_handler - INFO - Successfully read file with encoding: utf-8, delimiter: ','
+2025-06-26 05:17:45,636 - utils.data_handler - INFO - File processed successfully: 7043 rows, 21 columns, encoding: utf-8, delimiter: ','
+2025-06-26 05:17:45,644 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-26 05:17:45,645 - main - INFO - RESPONSE: Status 200 | Time: 0.102s
+2025-06-26 05:17:54,781 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-26 05:17:54,781 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-26 05:17:54,781 - models.preprocessing - INFO - Initial data shape: (7043, 21)
+2025-06-26 05:17:54,783 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-26 05:17:54,785 - models.preprocessing - INFO - Filled missing values in TotalCharges with 2283.3004408418656
+2025-06-26 05:17:54,786 - models.preprocessing - INFO - After missing values handling: (7043, 21)
+2025-06-26 05:17:54,786 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-26 05:17:54,790 - models.preprocessing - WARNING - IQR is 0 for SeniorCitizen, skipping outlier removal
+2025-06-26 05:17:54,799 - models.preprocessing - INFO - Removed 0 outlier rows (0.00%)
+2025-06-26 05:17:54,800 - models.preprocessing - INFO - After outlier removal: (7043, 21)
+2025-06-26 05:17:54,800 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-26 05:17:54,806 - models.preprocessing - INFO - Successfully normalized 4 columns
+2025-06-26 05:17:54,807 - models.preprocessing - INFO - After normalization: (7043, 21)
+2025-06-26 05:17:54,807 - models.preprocessing - INFO - Performing final data validation and cleaning
+2025-06-26 05:17:54,840 - models.preprocessing - INFO - Preprocessing completed successfully. Final shape: (7043, 21)
+2025-06-26 05:17:54,841 - models.preprocessing - INFO - Data reduction: 0 rows removed (0.00%)
+2025-06-26 05:17:54,841 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-26 05:17:54,864 - main - INFO - RESPONSE: Status 200 | Time: 0.082s
+2025-06-26 05:17:57,578 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/detect-anomaly?model_type=isolation_forest&contamination=0.1
+2025-06-26 05:17:57,938 - main - INFO - RESPONSE: Status 200 | Time: 0.360s
+2025-06-26 05:23:02,770 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-26 05:23:02,775 - utils.data_handler - INFO - Processing file: Customer Dataset 2.csv
+2025-06-26 05:23:02,873 - utils.data_handler - INFO - Successfully read file with encoding: utf-8, delimiter: ','
+2025-06-26 05:23:02,876 - utils.data_handler - INFO - File processed successfully: 7043 rows, 21 columns, encoding: utf-8, delimiter: ','
+2025-06-26 05:23:02,887 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-26 05:23:02,890 - main - INFO - RESPONSE: Status 200 | Time: 0.121s
+2025-06-26 05:23:09,748 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-26 05:23:09,750 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-26 05:23:09,750 - models.preprocessing - INFO - Initial data shape: (7043, 21)
+2025-06-26 05:23:09,750 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-26 05:23:09,752 - models.preprocessing - INFO - Filled missing values in TotalCharges with 2283.3004408418656
+2025-06-26 05:23:09,752 - models.preprocessing - INFO - After missing values handling: (7043, 21)
+2025-06-26 05:23:09,752 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-26 05:23:09,754 - models.preprocessing - WARNING - IQR is 0 for SeniorCitizen, skipping outlier removal
+2025-06-26 05:23:09,762 - models.preprocessing - INFO - Removed 0 outlier rows (0.00%)
+2025-06-26 05:23:09,763 - models.preprocessing - INFO - After outlier removal: (7043, 21)
+2025-06-26 05:23:09,763 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-26 05:23:09,771 - models.preprocessing - INFO - Successfully normalized 4 columns
+2025-06-26 05:23:09,771 - models.preprocessing - INFO - After normalization: (7043, 21)
+2025-06-26 05:23:09,772 - models.preprocessing - INFO - Performing final data validation and cleaning
+2025-06-26 05:23:09,792 - models.preprocessing - INFO - Preprocessing completed successfully. Final shape: (7043, 21)
+2025-06-26 05:23:09,793 - models.preprocessing - INFO - Data reduction: 0 rows removed (0.00%)
+2025-06-26 05:23:09,793 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-26 05:23:09,812 - main - INFO - RESPONSE: Status 200 | Time: 0.064s
+2025-06-26 05:23:14,187 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/detect-anomaly?model_type=isolation_forest&contamination=0.1
+2025-06-26 05:23:14,465 - main - INFO - RESPONSE: Status 200 | Time: 0.277s
+2025-06-27 04:04:26,526 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-27 04:04:26,534 - utils.data_handler - INFO - Processing file: Customer Dataset 2.csv
+2025-06-27 04:04:26,606 - utils.data_handler - INFO - Successfully read file with encoding: utf-8, delimiter: ','
+2025-06-27 04:04:26,606 - utils.data_handler - INFO - File processed successfully: 7043 rows, 21 columns, encoding: utf-8, delimiter: ','
+2025-06-27 04:04:26,622 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-27 04:04:26,630 - main - INFO - RESPONSE: Status 200 | Time: 0.104s
+2025-06-27 04:04:46,244 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-27 04:04:46,244 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-27 04:04:46,244 - models.preprocessing - INFO - Initial data shape: (7043, 21)
+2025-06-27 04:04:46,246 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-27 04:04:46,272 - models.preprocessing - INFO - Filled missing values in TotalCharges with 2283.3004408418656
+2025-06-27 04:04:46,274 - models.preprocessing - INFO - After missing values handling: (7043, 21)
+2025-06-27 04:04:46,274 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-27 04:04:46,282 - models.preprocessing - WARNING - IQR is 0 for SeniorCitizen, skipping outlier removal
+2025-06-27 04:04:46,290 - models.preprocessing - INFO - Removed 0 outlier rows (0.00%)
+2025-06-27 04:04:46,290 - models.preprocessing - INFO - After outlier removal: (7043, 21)
+2025-06-27 04:04:46,299 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-27 04:04:46,308 - models.preprocessing - INFO - Successfully normalized 4 columns
+2025-06-27 04:04:46,308 - models.preprocessing - INFO - After normalization: (7043, 21)
+2025-06-27 04:04:46,308 - models.preprocessing - INFO - Performing final data validation and cleaning
+2025-06-27 04:04:46,348 - models.preprocessing - INFO - Preprocessing completed successfully. Final shape: (7043, 21)
+2025-06-27 04:04:46,348 - models.preprocessing - INFO - Data reduction: 0 rows removed (0.00%)
+2025-06-27 04:04:46,348 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-27 04:04:46,386 - main - INFO - RESPONSE: Status 200 | Time: 0.142s
+2025-06-27 04:05:05,357 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=TotalCharges&model_type=random_forest&task_type=regression
+2025-06-27 04:05:05,357 - main - INFO - Using preprocessed data for prediction
+2025-06-27 04:05:06,455 - main - INFO - PREDICTION SUCCESSFUL: random_forest for regression
+2025-06-27 04:05:06,464 - main - INFO - RESPONSE: Status 200 | Time: 1.107s
+2025-06-27 04:05:18,639 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/detect-anomaly?model_type=isolation_forest&contamination=0.1
+2025-06-27 04:05:19,187 - main - INFO - RESPONSE: Status 200 | Time: 0.548s
+2025-06-27 04:05:30,060 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-27 04:05:30,067 - utils.data_handler - INFO - Processing file: Customer Dataset 2.csv
+2025-06-27 04:05:30,156 - utils.data_handler - INFO - Successfully read file with encoding: utf-8, delimiter: ','
+2025-06-27 04:05:30,159 - utils.data_handler - INFO - File processed successfully: 7043 rows, 21 columns, encoding: utf-8, delimiter: ','
+2025-06-27 04:05:30,167 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-27 04:05:30,172 - main - INFO - RESPONSE: Status 200 | Time: 0.111s
+2025-06-27 04:07:00,389 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-27 04:07:00,391 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-27 04:07:00,391 - models.preprocessing - INFO - Initial data shape: (7043, 21)
+2025-06-27 04:07:00,391 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-27 04:07:00,391 - models.preprocessing - INFO - Filled missing values in TotalCharges with 2283.3004408418656
+2025-06-27 04:07:00,391 - models.preprocessing - INFO - After missing values handling: (7043, 21)
+2025-06-27 04:07:00,391 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-27 04:07:00,397 - models.preprocessing - WARNING - IQR is 0 for SeniorCitizen, skipping outlier removal
+2025-06-27 04:07:00,406 - models.preprocessing - INFO - Removed 0 outlier rows (0.00%)
+2025-06-27 04:07:00,406 - models.preprocessing - INFO - After outlier removal: (7043, 21)
+2025-06-27 04:07:00,411 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-27 04:07:00,414 - models.preprocessing - INFO - Successfully normalized 4 columns
+2025-06-27 04:07:00,414 - models.preprocessing - INFO - After normalization: (7043, 21)
+2025-06-27 04:07:00,414 - models.preprocessing - INFO - Performing final data validation and cleaning
+2025-06-27 04:07:00,446 - models.preprocessing - INFO - Preprocessing completed successfully. Final shape: (7043, 21)
+2025-06-27 04:07:00,446 - models.preprocessing - INFO - Data reduction: 0 rows removed (0.00%)
+2025-06-27 04:07:00,446 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-27 04:07:00,471 - main - INFO - RESPONSE: Status 200 | Time: 0.082s
+2025-06-27 04:07:04,105 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/perform-segmentation?model_type=kmeans&n_clusters=3
+2025-06-27 04:07:07,408 - main - INFO - RESPONSE: Status 200 | Time: 3.304s
+2025-06-27 04:10:02,141 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-27 04:10:02,146 - utils.data_handler - INFO - Processing file: Customer Dataset 2.csv
+2025-06-27 04:10:02,237 - utils.data_handler - INFO - Successfully read file with encoding: utf-8, delimiter: ','
+2025-06-27 04:10:02,241 - utils.data_handler - INFO - File processed successfully: 7043 rows, 21 columns, encoding: utf-8, delimiter: ','
+2025-06-27 04:10:02,248 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-27 04:10:02,249 - main - INFO - RESPONSE: Status 200 | Time: 0.109s
+2025-06-27 04:10:10,015 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/preprocess-data?missing_strategy=mean&normalize_method=minmax&remove_outliers_flag=true&outlier_method=iqr
+2025-06-27 04:10:10,015 - models.preprocessing - INFO - Starting preprocessing pipeline
+2025-06-27 04:10:10,023 - models.preprocessing - INFO - Initial data shape: (7043, 21)
+2025-06-27 04:10:10,023 - models.preprocessing - INFO - Handling missing values with strategy: mean
+2025-06-27 04:10:10,028 - models.preprocessing - INFO - Filled missing values in TotalCharges with 2283.3004408418656
+2025-06-27 04:10:10,028 - models.preprocessing - INFO - After missing values handling: (7043, 21)
+2025-06-27 04:10:10,028 - models.preprocessing - INFO - Removing outliers with method: iqr
+2025-06-27 04:10:10,032 - models.preprocessing - WARNING - IQR is 0 for SeniorCitizen, skipping outlier removal
+2025-06-27 04:10:10,050 - models.preprocessing - INFO - Removed 0 outlier rows (0.00%)
+2025-06-27 04:10:10,050 - models.preprocessing - INFO - After outlier removal: (7043, 21)
+2025-06-27 04:10:10,050 - models.preprocessing - INFO - Normalizing data with method: minmax
+2025-06-27 04:10:10,063 - models.preprocessing - INFO - Successfully normalized 4 columns
+2025-06-27 04:10:10,065 - models.preprocessing - INFO - After normalization: (7043, 21)
+2025-06-27 04:10:10,065 - models.preprocessing - INFO - Performing final data validation and cleaning
+2025-06-27 04:10:10,099 - models.preprocessing - INFO - Preprocessing completed successfully. Final shape: (7043, 21)
+2025-06-27 04:10:10,099 - models.preprocessing - INFO - Data reduction: 0 rows removed (0.00%)
+2025-06-27 04:10:10,099 - utils.data_handler - INFO - Preprocessed data stored successfully
+2025-06-27 04:10:10,130 - main - INFO - RESPONSE: Status 200 | Time: 0.115s
+2025-06-27 04:10:24,163 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=SeniorCitizen&model_type=random_forest&task_type=regression
+2025-06-27 04:10:24,164 - main - INFO - Using preprocessed data for prediction
+2025-06-27 04:10:25,516 - main - INFO - PREDICTION SUCCESSFUL: random_forest for regression
+2025-06-27 04:10:25,523 - main - INFO - RESPONSE: Status 200 | Time: 1.360s
+2025-06-27 04:10:37,123 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/run-prediction?target_column=TotalCharges&model_type=random_forest&task_type=regression
+2025-06-27 04:10:37,124 - main - INFO - Using preprocessed data for prediction
+2025-06-27 04:10:38,193 - main - INFO - PREDICTION SUCCESSFUL: random_forest for regression
+2025-06-27 04:10:38,201 - main - INFO - RESPONSE: Status 200 | Time: 1.078s
+2025-06-27 04:26:14,525 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/detect-anomaly?model_type=isolation_forest&contamination=0.1
+2025-06-27 04:26:14,975 - main - INFO - RESPONSE: Status 200 | Time: 0.450s

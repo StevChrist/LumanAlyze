@@ -239,7 +239,7 @@ const DataVisualization: React.FC<DataVisualizationProps> = ({
         width: '100%',
         margin: 0,
         padding: 0,
-        background: 'transparent',
+        background: 'rgba(199, 199, 199, 0.85)',
         border: 'none',
         boxShadow: 'none'
       }}

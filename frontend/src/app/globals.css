@@ -65,7 +65,7 @@ body {
   font-size: 48px;
   line-height: 1.1;
   color: var(--color-cream);
-  margin-bottom: 32px;
+  margin-bottom: 0px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   text-align: center;
 }
@@ -138,8 +138,8 @@ body {
 }
 
 .preview-title {
-  font-size: 18px;
-  margin-bottom: 16px;
+  font-size: 20px;
+  margin-bottom: 12px;
   font-family: 'Lora', serif;
   color: var(--color-cream);
   text-align: center;
@@ -1746,8 +1746,8 @@ label {
 
 /* Data Preview Table Styling */
 .data-preview-container {
-  margin: 2rem auto 0 auto;
-  max-width: 95vw;
+  margin: 0 auto 16px auto;
+  max-width: 75vw;
   background: rgba(251, 247, 199, 0.04);
   border: 1px solid rgba(251, 247, 199, 0.18);
   border-radius: 10px;

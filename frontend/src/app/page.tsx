@@ -54,7 +54,6 @@ interface ErrorState {
 
 export default function Home() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  // Gabungkan MLResult jadi satu, dan pastikan hanya satu deklarasi
   const [selectedCategory, setSelectedCategory] = useState<AnalysisCategory>('prediction');
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string>('');
@@ -325,8 +324,6 @@ export default function Home() {
 
   // Fungsi skala log untuk error metrics
   const getMSEBarWidth = (mse: number) => {
-    // Skala log: semakin kecil mse, bar semakin pendek
-    // max = 1e-1 (0.1), min = 1e-6 (0.000001)
     if (mse <= 0) return '0%';
     const min = 1e-6;
     const max = 1e-1;
@@ -335,8 +332,6 @@ export default function Home() {
   };
 
   const getRMSEBarWidth = (rmse: number) => {
-    // Skala log: semakin kecil rmse, bar semakin pendek
-    // max = 1e-1 (0.1), min = 1e-4 (0.0001)
     if (rmse <= 0) return '0%';
     const min = 1e-4;
     const max = 1e-1;
@@ -358,7 +353,7 @@ export default function Home() {
 
   return (
     <>
-      {/* Loading Overlay - akan muncul saat model dijalankan */}
+      {/* Loading Overlay */}
       <LoadingOverlay 
         isVisible={isAnalyzing || isPreprocessing || isUploading}
         message={loadingMessage}
@@ -367,12 +362,11 @@ export default function Home() {
 
       <div className="container">
         <main className="main-content">
-          {/* CONDITIONAL TITLE - HIDE WHEN RESULTS SHOWN */}
+          {/* CONDITIONAL TITLE */}
           {!mlResult && (
             <h1 className="main-title">Welcome to LumenALYZE</h1>
           )}
 
-          {/* SHOW RESULTS TITLE WHEN RESULTS AVAILABLE */}
           {mlResult && (
             <h1 className="results-main-title">Analysis Results</h1>
           )}
@@ -739,7 +733,7 @@ export default function Home() {
                   />
                 </div>
 
-                {/* MODEL INFORMATION - SIMPLIFIED STRUCTURE */}
+                {/* MODEL INFORMATION */}
                 {mlResult && (
                   <div className="model-info-section">
                     <h3 className="model-info-title">Model Information</h3>
@@ -770,12 +764,12 @@ export default function Home() {
                   </div>
                 )}
 
-                {/* METRICS SUMMARY */}
-                {'metrics' in mlResult && (
+                {/* METRICS BERDASARKAN KATEGORI */}
+                {selectedCategory === 'prediction' && 'metrics' in mlResult && (
                   <div className="metrics-summary-container mt-8 flex flex-col items-center">
                     <h3 className="metrics-title text-lg font-semibold mb-4">Model Performance Metrics</h3>
                     
-                    {/* Primary Metrics Cards - TETAP SAMA */}
+                    {/* Primary Metrics Cards untuk Prediction */}
                     <div className="metrics-cards-grid grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                       <div className="metric-card primary bg-blue-50 rounded-lg p-4 flex items-center shadow">
                         <div className="metric-icon text-3xl mr-4">🎯</div>
@@ -817,7 +811,7 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* Detailed Metrics Table - TETAP SAMA */}
+                    {/* Detailed Metrics Table */}
                     <div className="detailed-metrics-section w-full max-w-2xl mb-8">
                       <h4 className="detailed-metrics-title font-semibold mb-2">Detailed Performance Metrics</h4>
                       <div className="metrics-table-container overflow-x-auto">
@@ -979,82 +973,237 @@ export default function Home() {
                         </table>
                       </div>
                     </div>
-
-                    {/* WHAT'S NEXT SECTION - BUTTON YANG DIPERBAIKI */}
-                    {mlResult && (
-                      <div className="whats-next-section">
-                        <h3 className="whats-next-title">What&apos;s Next?</h3>
-                        <p className="whats-next-subtitle">
-                          Explore different analysis types or start fresh with new data
-                        </p>
-                        
-                        <div className="action-buttons-container">
-                          {/* Primary Actions */}
-                          <div className="primary-actions">
-                            <button
-                              onClick={() => handleAnalysis('prediction')}
-                              disabled={isAnalyzing || selectedCategory === 'prediction'}
-                              className="btn-primary-action"
-                            >
-                              <span className="btn-icon">🎯</span>
-                              Try Prediction
-                            </button>
-                            
-                            <button
-                              onClick={() => handleAnalysis('anomaly')}
-                              disabled={isAnalyzing || selectedCategory === 'anomaly'}
-                              className="btn-primary-action"
-                            >
-                              <span className="btn-icon">🔍</span>
-                              Try Anomaly Detection
-                            </button>
-                            
-                            <button
-                              onClick={() => handleAnalysis('clustering')}
-                              disabled={isAnalyzing || selectedCategory === 'clustering'}
-                              className="btn-primary-action"
-                            >
-                              <span className="btn-icon">🔗</span>
-                              Try Clustering
-                            </button>
-                          </div>
-
-                          {/* Secondary Actions */}
-                          <div className="secondary-actions">
-                            <button
-                              onClick={() => {
-                                setShowVisualization(false);
-                                setShowAnalysis(true);
-                                setMlResult(null);
-                              }}
-                              className="btn-secondary-action btn-back"
-                            >
-                              <span className="btn-icon">↩️</span>
-                              Back to Analysis Options
-                            </button>
-                            
-                            <button
-                              onClick={() => {
-                                setSelectedFile(null);
-                                setFileMetadata(null);
-                                setPreprocessingResult(null);
-                                setMlResult(null);
-                                setShowPreprocessing(false);
-                                setShowAnalysis(false);
-                                setShowVisualization(false);
-                              }}
-                              className="btn-secondary-action btn-restart"
-                            >
-                              <span className="btn-icon">🆕</span>
-                              Start Analytics Again
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                    {/* END WHAT'S NEXT SECTION */}
                   </div>
                 )}
+
+                {/* METRICS UNTUK ANOMALY DETECTION */}
+                {selectedCategory === 'anomaly' && 'num_anomalies' in mlResult && (
+                  <div className="metrics-summary-container mt-8 flex flex-col items-center">
+                    <h3 className="metrics-title text-lg font-semibold mb-4">Anomaly Detection Results</h3>
+                    
+                    <div className="metrics-cards-grid grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                      <div className="metric-card primary bg-red-50 rounded-lg p-4 flex items-center shadow">
+                        <div className="metric-icon text-3xl mr-4">🚨</div>
+                        <div className="metric-content">
+                          <div className="metric-label font-semibold">Anomalies Found</div>
+                          <div className="metric-value text-red-700 text-xl">{mlResult.num_anomalies}</div>
+                          <div className="metric-description text-xs text-gray-500">Total anomalous data points</div>
+                        </div>
+                      </div>
+                      
+                      <div className="metric-card info bg-orange-50 rounded-lg p-4 flex items-center shadow">
+                        <div className="metric-icon text-3xl mr-4">📊</div>
+                        <div className="metric-content">
+                          <div className="metric-label font-semibold">Anomaly Rate</div>
+                          <div className="metric-value text-orange-700 text-xl">
+                            {mlResult.anomaly_percentage?.toFixed(2)}%
+                          </div>
+                          <div className="metric-description text-xs text-gray-500">Percentage of anomalies</div>
+                        </div>
+                      </div>
+                      
+                      <div className="metric-card success bg-blue-50 rounded-lg p-4 flex items-center shadow">
+                        <div className="metric-icon text-3xl mr-4">🧮</div>
+                        <div className="metric-content">
+                          <div className="metric-label font-semibold">Total Samples</div>
+                          <div className="metric-value text-blue-700 text-xl">{mlResult.total_samples}</div>
+                          <div className="metric-description text-xs text-gray-500">Data points analyzed</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Detailed Metrics Table untuk Anomaly */}
+                    <div className="detailed-metrics-section w-full max-w-2xl mb-8">
+                      <h4 className="detailed-metrics-title font-semibold mb-2">Detailed Anomaly Detection Metrics</h4>
+                      <div className="metrics-table-container overflow-x-auto">
+                        <table className="metrics-table min-w-full border border-gray-200 rounded-lg bg-white text-sm shadow">
+                          <thead>
+                            <tr className="bg-gray-50">
+                              <th className="px-4 py-2 text-left">Metric</th>
+                              <th className="px-4 py-2 text-left">Value</th>
+                              <th className="px-4 py-2 text-left">Performance</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td className="metric-name px-4 py-2 font-medium">
+                                <span className="metric-dot inline-block w-2 h-2 rounded-full bg-red-500 mr-2"></span>
+                                Anomalies Found
+                              </td>
+                              <td className="metric-value-cell px-4 py-2">{mlResult.num_anomalies}</td>
+                              <td className="performance-indicator px-4 py-2">
+                                <div className="performance-bar bg-gray-200 h-2 rounded">
+                                  <div className="performance-fill good bg-red-500 h-2 rounded" style={{ width: `${Math.min(mlResult.anomaly_percentage || 0, 100)}%` }}></div>
+                                </div>
+                                <span className="performance-text ml-2 text-xs text-red-700">Detected</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="metric-name px-4 py-2 font-medium">
+                                <span className="metric-dot inline-block w-2 h-2 rounded-full bg-orange-500 mr-2"></span>
+                                Anomaly Rate
+                              </td>
+                              <td className="metric-value-cell px-4 py-2">{mlResult.anomaly_percentage?.toFixed(2)}%</td>
+                              <td className="performance-indicator px-4 py-2">
+                                <div className="performance-bar bg-gray-200 h-2 rounded">
+                                  <div className="performance-fill average bg-orange-500 h-2 rounded" style={{ width: `${mlResult.anomaly_percentage}%` }}></div>
+                                </div>
+                                <span className="performance-text ml-2 text-xs text-orange-700">Ratio</span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* METRICS UNTUK CLUSTERING */}
+                {selectedCategory === 'clustering' && 'evaluation' in mlResult && (
+                  <div className="metrics-summary-container mt-8 flex flex-col items-center">
+                    <h3 className="metrics-title text-lg font-semibold mb-4">Clustering Analysis Results</h3>
+                    
+                    <div className="metrics-cards-grid grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                      <div className="metric-card primary bg-purple-50 rounded-lg p-4 flex items-center shadow">
+                        <div className="metric-icon text-3xl mr-4">🔢</div>
+                        <div className="metric-content">
+                          <div className="metric-label font-semibold">Clusters</div>
+                          <div className="metric-value text-purple-700 text-xl">
+                            {mlResult.evaluation.num_clusters}
+                          </div>
+                          <div className="metric-description text-xs text-gray-500">Number of clusters formed</div>
+                        </div>
+                      </div>
+                      
+                      <div className="metric-card info bg-teal-50 rounded-lg p-4 flex items-center shadow">
+                        <div className="metric-icon text-3xl mr-4">📈</div>
+                        <div className="metric-content">
+                          <div className="metric-label font-semibold">Silhouette Score</div>
+                          <div className="metric-value text-teal-700 text-xl">
+                            {mlResult.evaluation.silhouette_score?.toFixed(3)}
+                          </div>
+                          <div className="metric-description text-xs text-gray-500">Cluster separation quality</div>
+                        </div>
+                      </div>
+                      
+                      <div className="metric-card success bg-green-50 rounded-lg p-4 flex items-center shadow">
+                        <div className="metric-icon text-3xl mr-4">🧮</div>
+                        <div className="metric-content">
+                          <div className="metric-label font-semibold">Total Samples</div>
+                          <div className="metric-value text-green-700 text-xl">{mlResult.total_samples}</div>
+                          <div className="metric-description text-xs text-gray-500">Data points analyzed</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Detailed Metrics Table untuk Clustering */}
+                    <div className="detailed-metrics-section w-full max-w-2xl mb-8">
+                      <h4 className="detailed-metrics-title font-semibold mb-2">Detailed Clustering Metrics</h4>
+                      <div className="metrics-table-container overflow-x-auto">
+                        <table className="metrics-table min-w-full border border-gray-200 rounded-lg bg-white text-sm shadow">
+                          <thead>
+                            <tr className="bg-gray-50">
+                              <th className="px-4 py-2 text-left">Metric</th>
+                              <th className="px-4 py-2 text-left">Value</th>
+                              <th className="px-4 py-2 text-left">Performance</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td className="metric-name px-4 py-2 font-medium">
+                                <span className="metric-dot inline-block w-2 h-2 rounded-full bg-teal-500 mr-2"></span>
+                                Silhouette Score
+                              </td>
+                              <td className="metric-value-cell px-4 py-2">{mlResult.evaluation.silhouette_score?.toFixed(3)}</td>
+                              <td className="performance-indicator px-4 py-2">
+                                <div className="performance-bar bg-gray-200 h-2 rounded">
+                                  <div className="performance-fill good bg-teal-500 h-2 rounded" style={{ width: `${Math.max(0, Math.min(1, mlResult.evaluation.silhouette_score || 0)) * 100}%` }}></div>
+                                </div>
+                                <span className="performance-text ml-2 text-xs text-teal-700">{(mlResult.evaluation.silhouette_score || 0) > 0.5 ? 'Good' : 'Average'}</span>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td className="metric-name px-4 py-2 font-medium">
+                                <span className="metric-dot inline-block w-2 h-2 rounded-full bg-purple-500 mr-2"></span>
+                                Number of Clusters
+                              </td>
+                              <td className="metric-value-cell px-4 py-2">{mlResult.evaluation.num_clusters}</td>
+                              <td className="performance-indicator px-4 py-2">
+                                <div className="performance-bar bg-gray-200 h-2 rounded">
+                                  <div className="performance-fill average bg-purple-500 h-2 rounded" style={{ width: `${Math.min(mlResult.evaluation.num_clusters * 10, 100)}%` }}></div>
+                                </div>
+                                <span className="performance-text ml-2 text-xs text-purple-700">Count</span>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* WHAT'S NEXT SECTION - UNIVERSAL */}
+                <div className="whats-next-card-container" style={{
+                  maxWidth: 700,
+                  margin: "2rem auto",
+                  background: "rgba(255,255,255,0.04)",
+                  borderRadius: "18px",
+                  boxShadow: "0 4px 24px 0 rgba(0,0,0,0.18)",
+                  border: "2px solid #ffeaa7",
+                  padding: "2.5rem 2rem",
+                  textAlign: "center"
+                }}>
+                  <h3 className="whats-next-title" style={{
+                    fontSize: "2.2rem",
+                    fontWeight: 700,
+                    color: "#fff59d",
+                    marginBottom: "1rem"
+                  }}>What is Next?</h3>
+                  <p className="whats-next-subtitle" style={{
+                    color: "#fffde7",
+                    fontSize: "1.1rem",
+                    marginBottom: "2.2rem"
+                  }}>
+                    Explore different analysis types or start fresh with new data
+                  </p>
+                  <div className="action-buttons-section" style={{
+                    display: "flex",
+                    gap: "1.5rem",
+                    justifyContent: "center",
+                    marginBottom: "2.5rem"
+                  }}>
+                    <button 
+                      className={`btn-primary-action${selectedCategory === 'prediction' ? ' active' : ''}`} 
+                      onClick={() => handleAnalysis('prediction')}
+                    >
+                      🎯 TRY PREDICTION
+                    </button>
+                    <button 
+                      className={`btn-primary-action${selectedCategory === 'anomaly' ? ' active' : ''}`} 
+                      onClick={() => handleAnalysis('anomaly')}
+                    >
+                      🔍 TRY ANOMALY DETECTION
+                    </button>
+                    <button 
+                      className={`btn-primary-action${selectedCategory === 'clustering' ? ' active' : ''}`} 
+                      onClick={() => handleAnalysis('clustering')}
+                    >
+                      🧬 TRY CLUSTERING
+                    </button>
+                  </div>
+                  <div style={{
+                    display: 'flex',
+                    gap: '1rem',
+                    justifyContent: 'center'
+                  }}>
+                    <button className="btn-secondary-action" onClick={() => setShowAnalysis(true)}>
+                      ⬅️ Back to Analysis Options
+                    </button>
+                    <button className="btn-secondary-action" onClick={() => window.location.reload()}>
+                      🆕 Start Analytics Again
+                    </button>
+                  </div>
+                </div>
               </div>
             </>
           ) : null}
