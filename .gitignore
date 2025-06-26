@@ -169,3 +169,12 @@ playwright-report/
 .dockerignore
 docker-compose.override.yml
 .docker
+
+# Project Documentation (Private)
+Penjelasan.txt
+Roadmap Proyek Aplikasi Analisis Data.txt
+
+# Documentation files (if you want to exclude all similar files)
+# *.txt
+# docs/private/
+# notes/

@@ -2361,3 +2361,5 @@ ValueError: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars(
 2025-06-27 04:10:38,201 - main - INFO - RESPONSE: Status 200 | Time: 1.078s
 2025-06-27 04:26:14,525 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/detect-anomaly?model_type=isolation_forest&contamination=0.1
 2025-06-27 04:26:14,975 - main - INFO - RESPONSE: Status 200 | Time: 0.450s
+2025-06-27 04:38:39,873 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/perform-segmentation?model_type=kmeans&n_clusters=3
+2025-06-27 04:38:41,150 - main - INFO - RESPONSE: Status 200 | Time: 1.277s
