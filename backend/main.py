@@ -6,6 +6,7 @@ import numpy as np
 import math
 import json
 import pandas as pd
+import os
 
 # Import semua modules
 from utils.data_handler import DataHandler
@@ -68,15 +69,22 @@ class SafeJSONEncoder(json.JSONEncoder):
 
 # Initialize FastAPI app
 app = FastAPI(
-    title=settings.APP_NAME,
-    version=settings.APP_VERSION,
+    title="LumenALYZE API",
+    version="1.0.0",
     debug=settings.DEBUG
 )
+
+# CORS configuration
+origins = [
+    "http://localhost:3000",
+    "https://lumenalyze.vercel.app",  # Ganti dengan URL Vercel Anda
+    "https://yourusername.pythonanywhere.com",  # URL PythonAnywhere Anda
+]
 
 # CORS Configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.CORS_ORIGINS,
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
@@ -580,9 +588,4 @@ def api_status():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(
-        app,
-        host=settings.HOST,
-        port=settings.PORT,
-        log_level=settings.LOG_LEVEL.lower()
-    )
+    uvicorn.run(app, host="0.0.0.0", port=8000)
