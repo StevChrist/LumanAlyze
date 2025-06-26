@@ -2363,3 +2363,11 @@ ValueError: [TypeError("'numpy.int64' object is not iterable"), TypeError('vars(
 2025-06-27 04:26:14,975 - main - INFO - RESPONSE: Status 200 | Time: 0.450s
 2025-06-27 04:38:39,873 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/perform-segmentation?model_type=kmeans&n_clusters=3
 2025-06-27 04:38:41,150 - main - INFO - RESPONSE: Status 200 | Time: 1.277s
+2025-06-27 05:15:07,288 - main - INFO - INCOMING REQUEST: OPTIONS http://localhost:8000/upload-csv
+2025-06-27 05:15:07,289 - main - INFO - RESPONSE: Status 400 | Time: 0.001s
+2025-06-27 05:15:07,291 - main - INFO - INCOMING REQUEST: POST http://localhost:8000/upload-csv
+2025-06-27 05:15:07,297 - utils.data_handler - INFO - Processing file: Customer Dataset 2.csv
+2025-06-27 05:15:07,397 - utils.data_handler - INFO - Successfully read file with encoding: utf-8, delimiter: ','
+2025-06-27 05:15:07,401 - utils.data_handler - INFO - File processed successfully: 7043 rows, 21 columns, encoding: utf-8, delimiter: ','
+2025-06-27 05:15:07,408 - main - INFO - UPLOAD SUCCESSFUL: Customer Dataset 2.csv
+2025-06-27 05:15:07,409 - main - INFO - RESPONSE: Status 200 | Time: 0.117s
